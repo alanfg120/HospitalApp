@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,8 +9,7 @@ import 'package:hospitalapp/rutas.dart';
 import 'package:hospitalapp/src/componetes/chat/bloc/chat_bloc.dart';
 import 'package:hospitalapp/src/componetes/login/bloc/login_bloc.dart';
 import 'package:hospitalapp/src/componetes/login/vistas/login_page.dart';
-
-
+import 'package:web_socket_channel/io.dart';
 
 
 
@@ -16,7 +17,16 @@ import 'package:hospitalapp/src/componetes/login/vistas/login_page.dart';
 
 void main() async {
  WidgetsFlutterBinding.ensureInitialized();
-// ---- Shared Preferences -----
+
+ var channel = IOWebSocketChannel.connect("ws://localhost:3000/chat/alan",headers: {
+   HttpHeaders.authorizationHeader: 'Bearer tyteytyetd'
+ });
+ channel.sink.add("received!");
+channel.stream.listen((message) {
+   
+    print(message);
+   // channel.sink.close(status.goingAway);
+  });
  BlocSupervisor.delegate = SimpleBlocDelegate();
  
  runApp(MyApp());
