@@ -1,0 +1,21 @@
+{
+  "name": "server_hospital",
+  "version": "1.0.0",
+  "description": "servidor HospitalApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alan Fabian Herrera",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
+    "express-ws": "^4.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongodb": "^3.5.2",
+    "node-schedule": "^1.3.2"
+  }
+}

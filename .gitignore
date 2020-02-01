@@ -9,6 +9,7 @@
 .history
 .svn/
 
+Appweb/node_modules
 # IntelliJ related
 *.iml
 *.ipr
