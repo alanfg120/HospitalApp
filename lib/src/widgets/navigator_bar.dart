@@ -17,7 +17,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
     return  SafeArea (
         bottom: false,
         child: Container (
-               
+              
                child: BottomAppBar(
                       color       : Color(0xFF01C6BD),
                       shape       : CircularNotchedRectangle(),

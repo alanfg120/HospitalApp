@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hospitalapp/src/componetes/chat/bloc/chat_bloc.dart';
@@ -25,24 +26,23 @@ class _ChatPageState extends State<ChatPage> {
     final double     paddingInput     = MediaQuery.of(context).size.width * 0.2;
     final EdgeInsets paddingTextfield = EdgeInsets.only(left: 15,right:paddingInput,bottom: 20);
 
-    return Scaffold(
-             body  : BlocBuilder<ChatBloc,ChatState>(
-                      builder:(context,state){
-                               if(state is LoadingChatState)
-                                  return Center(child: CircularProgressIndicator());
-                               if(state is LoadMensajesState)
-                               return Padding(
-                                      padding: EdgeInsets.all(30.0),
-                                      child: _listMensaje(state.mensajes),
-                               );
-                            return Container();
-                           }
-                             
-            ),
-            
-           bottomSheet : _inputChat(paddingTextfield),
-     
-           );
+    return  Scaffold(
+               body  : BlocBuilder<ChatBloc,ChatState>(
+                        builder:(context,state){
+                                 if(state is LoadingChatState)
+                                    return Center(child: CircularProgressIndicator());
+                                 if(state is LoadMensajesState)
+                                 return  _listMensaje(state.mensajes);
+                                 
+                              return Container();
+                             }
+                               
+              ),
+              
+             bottomSheet : _inputChat(paddingTextfield),
+       
+             );
+    
     }
            
   Widget _inputChat(paddingTextfield)=>
@@ -83,7 +83,10 @@ class _ChatPageState extends State<ChatPage> {
                          );
 
 Widget _listMensaje(List<Mensaje> mensajes) {
-         return MensajeCard(mensajes: mensajes);
+         return GestureDetector(
+           onTap: ()=>SystemChannels.textInput.invokeMethod('TextInput.hide'),
+           child: MensajeCard(mensajes: mensajes)
+           );
 }
 }
 
