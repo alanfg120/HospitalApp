@@ -32,7 +32,6 @@ class _LoginPageState extends State<LoginPage> {
            body: GestureDetector(
                  onTap: ()=>FocusScope.of(context).unfocus(),
                  child: SingleChildScrollView(
-                         
                            child: BlocBuilder<LoginBloc,LoginState>(
                            builder: (context,state){
                            _correoController.text   = state.usuario.nombre;

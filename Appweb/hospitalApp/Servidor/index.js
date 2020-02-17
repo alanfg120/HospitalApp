@@ -20,7 +20,7 @@ app.use(express.json());
   })
 ); */
 
-
+app.use('/turnos',require('./api/turnos'))
 
 
 

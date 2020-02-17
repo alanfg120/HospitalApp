@@ -8,6 +8,8 @@ import 'package:hospitalapp/bloc_delegate.dart';
 import 'package:hospitalapp/rutas.dart';
 import 'package:hospitalapp/src/componetes/chat/bloc/chat_bloc.dart';
 import 'package:hospitalapp/src/componetes/chat/data/chat_repositorio.dart';
+import 'package:hospitalapp/src/componetes/citas/bloc/citas_bloc.dart';
+import 'package:hospitalapp/src/componetes/citas/data/citas_repositorio.dart';
 import 'package:hospitalapp/src/componetes/login/bloc/login_bloc.dart';
 import 'package:hospitalapp/src/componetes/login/vistas/login_page.dart';
 
@@ -25,6 +27,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
    ChatRpositorio chatrepo = ChatRpositorio();
+   CitasRepocitorio citasrepo = CitasRepocitorio();
   
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,9 @@ class MyApp extends StatelessWidget {
                       ),
                       BlocProvider<ChatBloc>(
                       create: (context) => ChatBloc(repositorio: chatrepo)..add(GetMensajesEvent()),
+                      ),
+                      BlocProvider<CitasBloc>(
+                      create: (context) => CitasBloc(repocitorio: citasrepo),
                       ),
 
                      ],
