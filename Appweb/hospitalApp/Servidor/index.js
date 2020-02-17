@@ -1,10 +1,14 @@
+var express = require("express");
+var app = express();
+const server = require('http').createServer(app);
+var cors = require("cors");
+var expressJwt = require("express-jwt");
+var jwtClave = "admin.120";
+var http = require("http")
+var httpServ = http.createServer(app)
+var mqtt=require("./mqtt_server");
 
-var express    = require('express');
-var app        = express();
-var expressWs  = require('express-ws')(app);
-var cors       = require('cors');
-var expressJwt = require('express-jwt');
-var jwtClave   = "admin.120";
+
 
 var aWss = expressWs.getWss();
 
@@ -17,17 +21,10 @@ app.use(express.json());
   })
 ); */
 
-app.ws('/chat/:user', function(ws, req) {
-  ws.on('message', function(msg) {
-    console.log(msg);
-    ws.send(msg);
-  });
-  console.log(aWss.path);
-});
-
-app.listen(3000,()=> {
- 
-console.log("Server ready");
 
 
+
+
+server.listen(3000, () => {
+  console.log("Server ready");
 });

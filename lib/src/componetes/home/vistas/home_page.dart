@@ -78,9 +78,10 @@ class _HomePageState extends State<HomePage> {
                                                         backgroundColor : Color(0XFFE4097F),
                                                         child           : Icon(addIcon(currentindex),color:Colors.white),
                                                         onPressed       : (){
-                                                                            add(currentindex);
+                                                                            add(currentindex,context);
+                                                                            if(currentindex==1)
                                                                             BlocProvider.of<ChatBloc>(context)
-                                                                              .add(SendMensajeEvent(mensaje: state.mensaje));
+                                                                            .add(SendMensajeEvent(mensaje: state.mensaje));
                                                                             },
                                                  );
                                              }
@@ -117,14 +118,14 @@ class _HomePageState extends State<HomePage> {
   
  
 
-  void add(int currentindex) {
+  void add(int currentindex,BuildContext context) {
 
        switch (currentindex) {
-                case 0  : //Navigator.pushNamed(context, 'formpedidos');
-                           
+                case 0  : 
+                          dialogoNewCita(context);
                           break;
                 case 1  : //Navigator.pushNamed(context, 'formproducto'); 
-                          FocusScope.of(context).requestFocus(FocusNode());
+                          //FocusScope.of(context).requestFocus(FocusNode());
                          
                           break;
                 case 2  : //Navigator.pushNamed(context, 'formcliente'); 
@@ -152,6 +153,27 @@ class _HomePageState extends State<HomePage> {
                        child           : Text("J",style: TextStyle(fontWeight: FontWeight.bold)),
                        backgroundColor : colorSecundary,
                        );
+
+   dialogoNewCita(BuildContext context) {
+    showDialog(
+        context: context,
+        builder:(context)=>
+        AlertDialog(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title    : Text(
+                   "Solicitando Turno Espere",
+                    style: TextStyle(color: Colors.white),
+                   ),
+        content  :Container(
+                  height   : 35,
+                  alignment: Alignment.center,
+                  child    : CircularProgressIndicator(
+                             valueColor:AlwaysStoppedAnimation<Color>(Colors.white),
+                  )),  
+        )
+      );
+  }
  
 }
 
