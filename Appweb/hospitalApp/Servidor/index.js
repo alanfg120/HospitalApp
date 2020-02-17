@@ -10,6 +10,7 @@ var mqtt=require("./mqtt_server");
 
 
 
+var aWss = expressWs.getWss();
 
 app.use(cors());
 app.use(express.static(__dirname + "/dist"));
@@ -21,7 +22,6 @@ app.use(express.json());
 ); */
 
 app.use('/turnos',require('./api/turnos'))
-
 
 
 
