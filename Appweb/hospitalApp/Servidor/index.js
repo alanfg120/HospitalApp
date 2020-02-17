@@ -6,6 +6,7 @@ var cors       = require('cors');
 var expressJwt = require('express-jwt');
 var jwtClave   = "admin.120";
 
+var aWss = expressWs.getWss();
 
 app.use(cors());
 app.use(express.static(__dirname + "/dist"));
@@ -21,8 +22,7 @@ app.ws('/chat/:user', function(ws, req) {
     console.log(msg);
     ws.send(msg);
   });
-
-  console.log(req.params);
+  console.log(aWss.path);
 });
 
 app.listen(3000,()=> {

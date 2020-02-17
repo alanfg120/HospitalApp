@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="login">
+      <form  #formuser="ngForm" (ngSubmit)="login(formuser)">
+      <!-- <img src="../../../assets/img/logo2.png" alt="" srcset="" width="200" height="70"> -->
+      <mat-form-field appearance="outline">
+        
+        <mat-icon matPrefix color="primary">person</mat-icon>
+        <input matInput [(ngModel)]="usuario.username" name="usuario" required #u="ngModel">
+        <mat-error *ngIf="u.errors?.required">Usuario Requerido</mat-error>
+       </mat-form-field>
+       <mat-form-field appearance="outline">
+       
+        <mat-icon matPrefix color="primary">vpn_key</mat-icon>
+        <input #p="ngModel" matInput [(ngModel)]="usuario.pwd" name="contrasena" type="password" required>
+        <mat-error *ngIf="p.errors?.required">Contraseña Requerido</mat-error>
+       </mat-form-field>
+       <button mat-raised-button color="accent" class="ingresar" type="submit" >Ingresar</button>
+    </form>
+  </div>
+  </div>
+  
+  
+  
