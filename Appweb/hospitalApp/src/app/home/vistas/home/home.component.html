@@ -6,14 +6,14 @@
   <span class="animated fadeIn fast">
     Menu
   </span>
-  <div class="input-icono">
+ <!--  <div class="input-icono">
     <input type="text" placeholder="Buscar" class="inputbuscar" #text />
-  </div>
+  </div> -->
 
   <span class="example-spacer"></span>
 
   <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon color="primary">power_settings_new</mat-icon>
+    <mat-icon style="color: white;">power_settings_new</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item>
@@ -25,18 +25,14 @@
   <mat-sidenav #sidenav mode="side" class="example-container" opened="true">
     <mat-list>
       <mat-action-list class="menuicon">
-        <button mat-flat-button color="primary" class="newingreso">
-          <mat-icon>add</mat-icon>
-          Nuevo Ingreso
-        </button>
-        <button mat-list-item class="menuicon">
+        <button mat-list-item class="menuicon" routerLink="turnos">
           <mat-icon
             class="example-icon"
             color="accent"
             style="margin-right:20px;"
             >date_range</mat-icon
           >
-          Citas
+          Turnos
         </button>
         <button mat-list-item class="menuicon">
           <mat-icon

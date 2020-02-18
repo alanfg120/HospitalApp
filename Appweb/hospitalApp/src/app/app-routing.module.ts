@@ -12,11 +12,11 @@ const routes: Routes = [
     loadChildren: "./home/home.module#HomeModule" ,
     //canActivate:[LoginService]
   },
-  { 
+/*   { 
      path: "**", 
      //loadChildren: "./login/login.module#LoginModule"
      loadChildren: "./home/home.module#HomeModule" , 
-  }
+  } */
 ];
 
 @NgModule({

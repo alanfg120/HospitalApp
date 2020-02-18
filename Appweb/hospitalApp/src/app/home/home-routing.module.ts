@@ -6,7 +6,13 @@ import { HomeComponent } from './vistas/home/home.component';
 const routes: Routes = [
   {
     path:'',
-    component:HomeComponent
+    component:HomeComponent,
+    children:[
+      {
+        path:'turnos',
+        loadChildren:"./../turnos/turnos.module#TurnosModule"
+      }
+    ]
   }
 ];
 
