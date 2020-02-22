@@ -32,33 +32,41 @@ class _LoginPageState extends State<LoginPage> {
            body: GestureDetector(
                  onTap: ()=>FocusScope.of(context).unfocus(),
                  child: SingleChildScrollView(
-                           child: BlocBuilder<LoginBloc,LoginState>(
+                           child: BlocConsumer<LoginBloc,LoginState>(
+                           listener: (contex,state){
+                             if(state is AutenticadoState)
+                                Navigator.pushReplacementNamed(context, 'home');
+                             if(state is AutenticandoState)
+                                if(state.registro == "ERROR")
+                                _snackBar("Datos Incorrectos");
+                           },
                            builder: (context,state){
-                           _correoController.text   = state.usuario.nombre;
-                           _passwordController.text = state.usuario.password;
-                           
-                           return  Form(
+                           if(state is AutenticandoState){
+                              _correoController.text   = state.usuario.email;
+                              _passwordController.text = state.usuario.password;
+                              return  Form(
                                    child: Container(
                                           //padding: EdgeInsets.all(33),
                                           child: Column(
                                                  children: <Widget>[
                                                             logo(),
                                                             //SizedBox(height: 30),
-                                                            input("Usuario",_correoController,Icon(MaterialCommunityIcons.account_outline),_focousuario,state.usuario),
+                                                            input("Email",_correoController,Icon(MaterialCommunityIcons.account_outline),_focousuario,state.usuario),
                                                             SizedBox(height: 10),
                                                             input("Contraseña",_passwordController,Icon(MaterialCommunityIcons.lock_open_outline),_focopassword,state.usuario),
                                                             SizedBox(height: 10),
                                                             olvidoPassword(),
                                                             SizedBox(height: 20),
-                                                            registroButton(),
+                                                            registroButton(state.usuario),
                                                             SizedBox(height: 20),
-                                                            singGoogle(),
                                                             singUptext()
                                                             
                                                            ],
                                             ),
                                    ),
                                    );
+                           }
+                           return Center(child: CircularProgressIndicator());
                            },
                            ),
                          ),
@@ -68,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
   
   }
 
-Widget input(String texto, TextEditingController controller,Icon icono,foco,Usuario usuario){
+Widget input(String texto, TextEditingController controller,Icon icono,foco,Usuario state){
         TextInputAction textinput;
          if(texto == 'Usuario' || texto == 'Contraseña')
                textinput=TextInputAction.next;
@@ -89,7 +97,7 @@ Widget input(String texto, TextEditingController controller,Icon icono,foco,Usua
                                        ),
                    onEditingComplete :(){
                                           switch (texto) {
-                                            case 'Usuario'    : FocusScope.of(context).requestFocus(_focopassword);
+                                            case 'Email'    : FocusScope.of(context).requestFocus(_focopassword);
                                                                 break;
                                             case 'Contraseña' : //FocusScope.of(context).requestFocus(_fococompania);
                                                                 break;
@@ -98,9 +106,9 @@ Widget input(String texto, TextEditingController controller,Icon icono,foco,Usua
                                         },
                    onChanged         :(value){
                                         switch (texto) {
-                                           case 'Usuario'    : usuario.username   = value;
+                                           case 'Email'    : state.email      = value;
                                                                break;
-                                           case 'Contraseña' : usuario.password   = value;
+                                           case 'Contraseña' : state.password   = value;
                                                                break;
                                            default           : break;    
                                          }
@@ -109,7 +117,7 @@ Widget input(String texto, TextEditingController controller,Icon icono,foco,Usua
          ),
        );
  }
-  Widget registroButton() => Padding(
+  Widget registroButton(Usuario usuario) => Padding(
                              padding : EdgeInsets.symmetric(horizontal: 40),
                              child   : MaterialButton(
                                        height    : 50,
@@ -126,7 +134,8 @@ Widget input(String texto, TextEditingController controller,Icon icono,foco,Usua
                                                   borderRadius: BorderRadiusDirectional.circular(30)
                                                   ) ,                
                                        onPressed :(){
-                                        Navigator.pushReplacementNamed(context, 'home');
+                                         context.bloc<LoginBloc>().add(AuthEvent(usuario: usuario));
+                                         
                                        },
                              ),
   );
@@ -175,9 +184,13 @@ Widget input(String texto, TextEditingController controller,Icon icono,foco,Usua
                      ),
                      );
 
-  void _snackBar(GlobalKey<ScaffoldState> scaffoldKey) {
-     scaffoldKey.currentState.showSnackBar(
-       SnackBar(content: Text("Ya puedes Ingresar"))
+  void _snackBar(String mensaje) {
+     _scaffoldKey.currentState.showSnackBar(
+       SnackBar(
+       content: Text(mensaje),
+       behavior: SnackBarBehavior.floating,
+       duration: Duration(seconds: 1),
+       )
      );
 
   }

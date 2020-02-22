@@ -23,7 +23,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
 
-    final double     paddingInput     = MediaQuery.of(context).size.width * 0.2;
+    final double     paddingInput     = MediaQuery.of(context).size.width * 0.05;
     final EdgeInsets paddingTextfield = EdgeInsets.only(left: 15,right:paddingInput,bottom: 20);
 
     return  Scaffold(
@@ -40,7 +40,7 @@ class _ChatPageState extends State<ChatPage> {
               ),
               
              bottomSheet : _inputChat(paddingTextfield),
-       
+            
              );
     
     }
@@ -63,6 +63,7 @@ class _ChatPageState extends State<ChatPage> {
                                                  prefixIcon     : Icon(MaterialCommunityIcons.chat_outline,color: primaryColor),
                                                  contentPadding : EdgeInsets.all(10),
                                                  hintText       : "Escriba tu Mensaje",
+                                                
                                                  enabledBorder  : OutlineInputBorder(
                                                                   borderRadius : BorderRadius.circular(50),
                                                                   borderSide   : BorderSide(color:Colors.white)

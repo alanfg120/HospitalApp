@@ -1,6 +1,16 @@
 part of 'citas_bloc.dart';
 
-@immutable
-abstract class CitasState {}
+class CitasState extends Equatable {
+  final bool loading;
 
-class CitasInitial extends CitasState {}
+  CitasState({this.loading});
+  factory CitasState.initial() {
+    final loading = false;
+    return CitasState(loading: loading);
+  }
+  CitasState copyWith({bool loading}) =>
+      CitasState(loading: loading ?? this.loading);
+
+  @override
+  List<Object> get props => [];
+}

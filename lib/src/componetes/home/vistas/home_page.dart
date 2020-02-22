@@ -71,23 +71,26 @@ class _HomePageState extends State<HomePage> {
                                  items      : menuItemslist
                                  ),
            floatingActionButton: currentindex  < 2 ?
-                                 BlocBuilder<ChatBloc,ChatState>(
-                                             builder:(context,state){
-                                             if(state is LoadMensajesState){
-                                                 return FloatingActionButton(
+                                
+                                            
+                                            
+                                                  FloatingActionButton(
                                                         backgroundColor : Color(0XFFE4097F),
                                                         child           : Icon(addIcon(currentindex),color:Colors.white),
                                                         onPressed       : (){
                                                                             add(currentindex,context);
-                                                                            if(currentindex==1)
-                                                                            BlocProvider.of<ChatBloc>(context)
-                                                                            .add(SendMensajeEvent(mensaje: state.mensaje));
+                                                                            if(currentindex==1){
+                                                                              final state = context.bloc<ChatBloc>().state;
+                                                                              if(state is LoadMensajesState)
+                                                                                 context.bloc<ChatBloc>().add(SendMensajeEvent(mensaje: state.mensaje));
+                                                                            }
+                                                                            
                                                                             },
-                                                 );
-                                             }
-                                             return Container();
-                                 }
-                          )
+                                                 )
+                                             
+                                       
+                                 
+                         
                           
                                : null,
            floatingActionButtonLocation: currentindex == 0 ? floatBoton : null

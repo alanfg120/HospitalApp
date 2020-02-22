@@ -22,6 +22,7 @@ app.use(express.json());
 ); */
 
 app.use('/turnos',require('./api/turnos'))
+app.use('/usuarios',require('./api/usuarios'))
 
 
 

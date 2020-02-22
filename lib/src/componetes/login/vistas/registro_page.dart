@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -17,10 +19,12 @@ class RegistroPage extends StatefulWidget {
 class _RegistroPageState extends State<RegistroPage> {
 
   final _correoController    = TextEditingController();
+  final _usuarioController    = TextEditingController();
   final _passwordController  = TextEditingController();
   final _cedulaController    = TextEditingController();
   
   final _focousuario   = FocusNode();
+  final _focoemail     = FocusNode();
   final _focopassword  = FocusNode();
   final _fococedula    = FocusNode();
 
@@ -34,32 +38,47 @@ class _RegistroPageState extends State<RegistroPage> {
            body: GestureDetector(
                  onTap: ()=>FocusScope.of(context).unfocus(),
                  child: SingleChildScrollView(
-                         
-                           child: BlocBuilder<LoginBloc,LoginState>(
+                        child: BlocConsumer<LoginBloc,LoginState>(
+                               listener: (context,state){
+                                         if(state is AutenticandoState){
+                                           switch (state.registro) {
+                                                   case 'REGISTRADO' : _snackBar("Usuario Registrado");
+                                                                       break;
+                                                   case 'DUPLICADO'  :_snackBar("Usuario Ya Existe");
+                                                                       break;
+                                                   case 'ERROR'      :_snackBar("Ocurrio un Error");
+                                                                       break;
+                                           }
+                                         }
+                           },
                            builder: (context,state){
-                           _correoController.text   = state.usuario.email;
-                           _passwordController.text = state.usuario.password;
-                           _cedulaController.text   = state.usuario.cedula;
-                           return  Form(
-                                   child: Container(
-                                          //padding: EdgeInsets.all(33),
-                                          child: Column(
-                                                 children: <Widget>[
-                                                            logo(),
-                                                            //SizedBox(height: 30),
-                                                            input("Usuario",_correoController,Icon(MaterialCommunityIcons.account_outline),_focousuario,state.usuario),
-                                                            SizedBox(height: 10),
-                                                            input("Contraseña",_passwordController,Icon(MaterialCommunityIcons.lock_open_outline),_focopassword,state.usuario),
-                                                            SizedBox(height: 10),
-                                                            input("Cedula",_passwordController,Icon(MaterialCommunityIcons.id_card),_fococedula,state.usuario),
-                                                            SizedBox(height: 10),
-                                                            registroButton(),
-                                                            SizedBox(height: 20),
-                                                            singGoogle(),
-                                                            ],
-                                            ),
-                                   ),
-                                   );
+                                     if(state is AutenticandoState){
+                                       _usuarioController.text  = state.usuario.nombre;
+                                       _correoController.text   = state.usuario.email;
+                                       _passwordController.text = state.usuario.password;
+                                       _cedulaController.text   = state.usuario.cedula;
+                                       return  Form(
+                                               child: Container(
+                                                      //padding: EdgeInsets.all(33),
+                                                      child: Column(
+                                                             children: <Widget>[
+                                                                        logo(),
+                                                                        //SizedBox(height: 30),
+                                                                        input("Nombres Y Apellidos",_usuarioController,Icon(MaterialCommunityIcons.account_card_details),_focousuario,state.usuario),
+                                                                        SizedBox(height: 10),
+                                                                        input("Email",_correoController,Icon(MaterialCommunityIcons.account_outline),_focoemail,state.usuario),
+                                                                        SizedBox(height: 10),
+                                                                        input("Contraseña",_passwordController,Icon(MaterialCommunityIcons.lock_open_outline),_focopassword,state.usuario),
+                                                                        SizedBox(height: 10),
+                                                                        input("Cedula",_cedulaController,Icon(MaterialCommunityIcons.id_card),_fococedula,state.usuario),
+                                                                        SizedBox(height: 10),
+                                                                        registroButton(state),
+                                                                        ],
+                                                        ),
+                                               ),
+                                               );
+                           }
+                           return Container();
                            },
                            ),
                          ),
@@ -72,7 +91,7 @@ class _RegistroPageState extends State<RegistroPage> {
 Widget input
        (String texto, TextEditingController controller,Icon icono,foco,Usuario usuario){
         TextInputAction textinput;
-         if(texto == 'Usuario' || texto == 'Contraseña')
+         if(texto == 'Email' || texto == 'Contraseña' || texto == "Nombres Y Apellidos")
                textinput=TextInputAction.next;
          else  textinput=TextInputAction.done;
          return Padding(
@@ -90,7 +109,10 @@ Widget input
                                               ),
                           onEditingComplete :(){
                                                  switch (texto) {
-                                                   case 'Usuario'    : FocusScope.of(context).requestFocus(_focopassword);
+                                                   
+                                                   case 'Nombres Y Apellidos': FocusScope.of(context).requestFocus(_focoemail);
+                                                                       break;
+                                                   case 'Email'    : FocusScope.of(context).requestFocus(_focopassword);
                                                                        break;
                                                    case 'Contraseña' : FocusScope.of(context).requestFocus(_fococedula);
                                                                        break;
@@ -101,7 +123,9 @@ Widget input
                                                },
                           onChanged         :(value){
                                                switch (texto) {
-                                                  case 'Usuario'    : usuario.username = value;
+                                                 case 'Nombres Y Apellidos': usuario.nombre = value;
+                                                                       break;
+                                                  case 'Email'      : usuario.email = value;
                                                                       break;
                                                   case 'Contraseña' : usuario.password = value;
                                                                       break;
@@ -113,13 +137,13 @@ Widget input
          ),
        );
  }
-  Widget registroButton() => Padding(
+  Widget registroButton(AutenticandoState state) => Padding(
                              padding : EdgeInsets.symmetric(horizontal: 40),
                              child   : MaterialButton(
                                        height    : 50,
                                        minWidth  : double.maxFinite,
                                        color     : Color(0XFFE4097F),
-                                       child     : Text("Ingresar",
+                                       child     : Text("Registrar",
                                                         style: TextStyle(
                                                                color      : Colors.white,
                                                                fontSize   : 18,
@@ -130,7 +154,7 @@ Widget input
                                                   borderRadius: BorderRadiusDirectional.circular(30)
                                                   ) ,                
                                        onPressed :(){
-
+                                          BlocProvider.of<LoginBloc>(context).add(RegistroEvent(usuario:state.usuario));
                                        },
                              ),
   );
@@ -179,11 +203,17 @@ Widget input
                      ),
                      );
 
-  void _snackBar(GlobalKey<ScaffoldState> scaffoldKey) {
-     scaffoldKey.currentState.showSnackBar(
-       SnackBar(content: Text("Ya puedes Ingresar"))
-     );
-
+  void _snackBar(String mensaje) async {
+    _scaffoldKey.currentState.showSnackBar(
+       SnackBar(
+       content: Text(mensaje),
+       behavior: SnackBarBehavior.floating,
+       duration: Duration(seconds: 1)
+       )
+     )..closed.then((rason){
+        if(mensaje=="Usuario Registrado")
+        Navigator.pop(context);
+     });
   }
 
 

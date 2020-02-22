@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:hospitalapp/src/componetes/citas/bloc/citas_bloc.dart';
 
 class CitasPage extends StatefulWidget {
   CitasPage({Key key}) : super(key: key);
@@ -13,25 +15,30 @@ class _CitasPageState extends State<CitasPage> {
   final Color secundaryColor = Color(0xFF01C6BD);   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-           body: Center(
-             child: Column(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                       GestureDetector(
-                       onTap: (){
-                                 dialogoNewCita(context);
-                                
-                                },
-                       child: _card("Pedir cita",MaterialCommunityIcons.calendar_plus)
-                       ),
-                       SizedBox(height: 10),
-                       _card("Tus citas",MaterialCommunityIcons.calendar_range),
-                     
-                  ],
-                   ),
-           ),
-           );
+    return BlocBuilder<CitasBloc,CitasState>(
+          builder: (context,state)=>
+           Scaffold(
+             body: Center(
+               child: Column(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                         GestureDetector(
+                         onTap: (){
+
+                                  
+                                   dialogoNewCita(context);
+                                  
+                                  },
+                         child: _card("Pedir cita",MaterialCommunityIcons.calendar_plus)
+                         ),
+                         SizedBox(height: 10),
+                         _card("Tus citas",MaterialCommunityIcons.calendar_range),
+                       
+                    ],
+                     ),
+             ),
+             ),
+    );
   }
 
   Widget _card(String s, IconData icon) {

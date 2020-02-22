@@ -9,6 +9,7 @@
   "author": "Alan Fabian Herrera",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^4.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",

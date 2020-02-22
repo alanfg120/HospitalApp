@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 router.post('/new', async (req, res) => {
     let { db, conection } = await mongo();
     try {
-        await db.collection().insertOne(req.body)
+  
     } catch (err) {
 
     }
