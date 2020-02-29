@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./turnos.component.css']
 })
 export class TurnosComponent implements OnInit {
-
+  message:boolean;
   constructor() { }
 
   ngOnInit() {

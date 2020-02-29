@@ -35,11 +35,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   Stream<ChatState> _getMensajes() async* {
     final mensajes = await repositorio.getConvesation();
-    repositorio.requestMensaje.listen((data){
+   /*  repositorio.requestMensaje.listen((data){
     final mensaje = repositorio.messaje(data);
      if(mensaje.mensaje!=null)
        add(RequestMensajeEvent(mensaje: mensaje));
-    });
+    }); */
     final mensaje = Mensaje(id: "1", fecha: DateTime.now(), mensaje: '');
     yield LoadMensajesState(mensajes: mensajes, mensaje: mensaje);
   }

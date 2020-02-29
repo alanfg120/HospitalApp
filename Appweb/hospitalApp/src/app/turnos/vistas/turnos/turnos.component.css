@@ -1,0 +1,107 @@
+.contenedor {
+  height: calc(100vh - 56px);
+  box-sizing: border-box;
+  padding: 0px 0px 0px 20px;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+}
+
+.turnos {
+  padding-top: 20px;
+  border-right: 1px solid #d8d8d8;
+  overflow-y: scroll;
+}
+
+.example-card {
+  max-width: 350px;
+  margin-bottom: 10px;
+}
+
+.avatar{
+  background-color: #e4097f;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.chat{
+    position: relative;
+    display: grid;
+    grid-template-rows: 76px 1fr 76px;
+}
+
+.send{
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    padding: 18px;
+    width: 100%;
+    display: grid;
+    flex-direction: column;
+}
+
+.usuario{
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    background-color: white;
+}
+
+
+.nombre{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.subtitle{
+    font-size: 12px;
+    color: gray;
+}
+
+.inputchat{
+width: 85%;
+padding: 12px;
+border-radius: 20px;
+border: none;
+height: 20px;
+max-height: 100px;
+font-size: 12px;
+resize: none;
+margin: 0px 5px 0px 5px;
+}
+
+.inputchat:focus{
+    outline: 0px;
+}
+
+
+
+.asignacion{
+    color: #e4097f;
+
+}
+.title{
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.sendinput{
+    display: flex;
+    flex-direction: row;
+}
+
+.messages{
+height: calc(50vh - 132px)
+  
+}
+
+.mensajes{
+
+
+}

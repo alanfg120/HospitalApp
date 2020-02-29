@@ -7,7 +7,6 @@ abstract class CitasEvent extends Equatable {
 }
 
 class SolicitarTurnoEvent extends CitasEvent {
-
   final Turno turno;
   SolicitarTurnoEvent({this.turno});
   @override

@@ -8,6 +8,9 @@ var http = require("http")
 var httpServ = http.createServer(app)
 var mqtt=require("./mqtt_server");
 
+// tareas Programadas
+var activarTurnos    = require("./tareas/turnos").activarTurnos
+var desactivarTurnos = require("./tareas/turnos").desactivarTurnos
 
 
 

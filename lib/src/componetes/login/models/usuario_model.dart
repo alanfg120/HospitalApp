@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:hive/hive.dart';
 part 'usuario_model.g.dart';
 

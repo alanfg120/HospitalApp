@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hospitalapp/src/componetes/citas/bloc/citas_bloc.dart';
+import 'package:hospitalapp/src/componetes/citas/models/turno_model.dart';
+import 'package:hospitalapp/src/componetes/login/bloc/login_bloc.dart';
 
 class CitasPage extends StatefulWidget {
   CitasPage({Key key}) : super(key: key);
@@ -24,10 +26,9 @@ class _CitasPageState extends State<CitasPage> {
                     children: <Widget>[
                          GestureDetector(
                          onTap: (){
-
-                                  
-                                   dialogoNewCita(context);
-                                  
+                                    Navigator.pushNamed(context, 'solicitar');
+                                   
+                                   // _sendTurno(context);
                                   },
                          child: _card("Pedir cita",MaterialCommunityIcons.calendar_plus)
                          ),
@@ -66,24 +67,19 @@ class _CitasPageState extends State<CitasPage> {
             );
   }
 
-  dialogoNewCita(BuildContext context) {
-    showDialog(
-        context: context,
-        builder:(context)=>
-        AlertDialog(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title    : Text(
-                   "Solicitando Turno Espere",
-                    style: TextStyle(color: Colors.white),
-                   ),
-        content  :Container(
-                  height   : 35,
-                  alignment: Alignment.center,
-                  child    : CircularProgressIndicator(
-                             valueColor:AlwaysStoppedAnimation<Color>(Colors.white),
-                  )),  
-        )
-      );
+  
+
+  void _sendTurno(BuildContext context) {
+    final stateUsuario = context.bloc<LoginBloc>().state;
+    if(stateUsuario is AutenticadoState){
+      final turno = Turno(
+                    nombre: stateUsuario.usuario.nombre,
+                    cedula: stateUsuario.usuario.cedula,
+                    email : stateUsuario.usuario.email
+                    );
+      context.bloc<CitasBloc>().add(SolicitarTurnoEvent(turno: turno));
+
+    }
+      
   }
 }

@@ -12,7 +12,6 @@ send(Mensaje mensaje){
  mqtt.sendMessaje("test", mensaje.toJson());
 }
 Future<List<Mensaje>> getConvesation() async {
-  mqtt.connect();
   print("obteniendo Conversacion de Hive");
   return [];
 }

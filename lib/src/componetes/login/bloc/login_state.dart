@@ -7,7 +7,7 @@ class LoginState extends Equatable {
 
 class AutenticandoState extends LoginState {
   final Usuario usuario;
-  final String  registro;
+  final StatusLogin  registro;
   AutenticandoState({this.usuario,this.registro});
   factory AutenticandoState.initial()=>
           AutenticandoState(
@@ -18,9 +18,9 @@ class AutenticandoState extends LoginState {
                    password : '',
                    token    : ''
                    ),
-          registro: 'Inicial'
+          registro: StatusLogin.inicial
         );
-  AutenticandoState copyWith({Usuario usuario,String  registro})
+  AutenticandoState copyWith({Usuario usuario,StatusLogin  registro})
   => AutenticandoState(usuario: usuario ?? this.registro,registro: registro ?? registro);
   @override
   List<Object> get props => [usuario,registro];

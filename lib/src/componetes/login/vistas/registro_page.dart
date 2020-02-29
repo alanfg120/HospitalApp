@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hospitalapp/src/componetes/login/bloc/login_bloc.dart';
+import 'package:hospitalapp/src/componetes/login/models/status_model.dart';
 import 'package:hospitalapp/src/componetes/login/models/usuario_model.dart';
 
 
@@ -42,12 +41,13 @@ class _RegistroPageState extends State<RegistroPage> {
                                listener: (context,state){
                                          if(state is AutenticandoState){
                                            switch (state.registro) {
-                                                   case 'REGISTRADO' : _snackBar("Usuario Registrado");
-                                                                       break;
-                                                   case 'DUPLICADO'  :_snackBar("Usuario Ya Existe");
-                                                                       break;
-                                                   case 'ERROR'      :_snackBar("Ocurrio un Error");
-                                                                       break;
+                                                   case StatusLogin.registrado : _snackBar("Usuario Registrado");
+                                                                                 break;
+                                                   case StatusLogin.duplicado  :_snackBar("Usuario Ya Existe");
+                                                                                break;
+                                                   case StatusLogin.error      :_snackBar("Ocurrio un Error");
+                                                                                break;
+                                                   case StatusLogin.inicial    : break;
                                            }
                                          }
                            },

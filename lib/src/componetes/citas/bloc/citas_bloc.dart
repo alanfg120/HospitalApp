@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hospitalapp/src/componetes/citas/data/citas_repositorio.dart';
+import 'package:hospitalapp/src/componetes/citas/models/status_model.dart';
 import 'package:hospitalapp/src/componetes/citas/models/turno_model.dart';
 import 'package:meta/meta.dart';
 
@@ -24,7 +25,9 @@ class CitasBloc extends Bloc<CitasEvent, CitasState> {
   }
 
    Stream<CitasState> _solicitarTurno(SolicitarTurnoEvent event) async*{
+     yield CitasState(status: StatusCitas.loading);
      final resp = await repocitorio.sendTurno(event.turno);
-      yield state.copyWith(loading: resp);
+     yield CitasState(status: resp);
+    
    }
 }

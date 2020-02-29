@@ -1,4 +1,6 @@
 import 'package:hive/hive.dart';
+import 'package:hospitalapp/src/componetes/citas/models/status_model.dart';
+import 'package:hospitalapp/src/componetes/login/models/status_model.dart';
 import 'package:hospitalapp/src/componetes/login/models/usuario_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,16 +17,16 @@ class LoginRepocitorio {
       return usuarioBox.getAt(0);
   }
 
-  Future<String> setUsuario(Usuario usuario) async {
+  Future<StatusLogin> setUsuario(Usuario usuario) async {
     try {
       final resp =
           await http.post('$url/new', body: usuario.toJson(), headers: headers);
-      if (resp.statusCode == 200) return "REGISTRADO";
-      if (resp.statusCode == 400) return "DUPLICADO";
+      if (resp.statusCode == 200) return StatusLogin.registrado;
+      if (resp.statusCode == 400) return StatusLogin.duplicado;
     } catch (e) {
-      return "ERROR";
+      return StatusLogin.error;
     }
-    return 'ERROR';
+    return StatusLogin.error;
   }
 
   Future<Usuario> auth(Usuario usuario) async {
