@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hospitalapp/src/componetes/login/bloc/login_bloc.dart';
+import 'package:hospitalapp/src/componetes/login/models/status_model.dart';
 import 'package:hospitalapp/src/componetes/login/models/usuario_model.dart';
 
 
@@ -24,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   final _focopassword  = FocusNode();
   
   var _scaffoldKey = GlobalKey<ScaffoldState>();
-
+    final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                              if(state is AutenticadoState)
                                 Navigator.pushReplacementNamed(context, 'home');
                              if(state is AutenticandoState)
-                                if(state.registro == "ERROR")
+                                if(state.registro == StatusLogin.error)
                                 _snackBar("Datos Incorrectos");
                            },
                            builder: (context,state){
@@ -45,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                               _correoController.text   = state.usuario.email;
                               _passwordController.text = state.usuario.password;
                               return  Form(
+                                   key: _formKey,
                                    child: Container(
                                           //padding: EdgeInsets.all(33),
                                           child: Column(
@@ -113,7 +115,17 @@ Widget input(String texto, TextEditingController controller,Icon icono,foco,Usua
                                            default           : break;    
                                          }
                 
-                                       },            
+                                       }, 
+                   validator         :(value){
+                                        Pattern pattern = r'[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$';
+                                        RegExp   regex = new RegExp(pattern);
+                                        if(value.isEmpty) return "Es requerido";
+                                        if(texto== 'Email') 
+                                          if(!regex.hasMatch(value))
+                                            return "No es Correo Valido";
+                                       
+                                        return null;
+                                      },          
          ),
        );
  }
@@ -134,6 +146,7 @@ Widget input(String texto, TextEditingController controller,Icon icono,foco,Usua
                                                   borderRadius: BorderRadiusDirectional.circular(30)
                                                   ) ,                
                                        onPressed :(){
+                                         if(_formKey.currentState.validate())
                                          context.bloc<LoginBloc>().add(AuthEvent(usuario: usuario));
                                          
                                        },

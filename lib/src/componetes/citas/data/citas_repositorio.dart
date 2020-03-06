@@ -9,7 +9,7 @@ class CitasRepocitorio {
   final mqtt = MqttService();
 
   Turno turno;
-  String url = "http://localhost:3000/turnos/";
+  String url = "http://192.168.0.17:3000/turnos/";
   final header = {"Content-Type": "application/json"};
 
   Future<StatusCitas> sendTurno(Turno turno) async {

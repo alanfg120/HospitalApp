@@ -25,7 +25,6 @@ export class TurnosEffects {
 
   constructor(
     private actions$: Actions,
-    private turnosService: TurnosService,
-  
+    private turnosService: TurnosService
   ) {}
 }

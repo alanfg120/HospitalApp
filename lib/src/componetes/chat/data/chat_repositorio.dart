@@ -9,7 +9,7 @@ final mqtt = MqttService();
 
 
 send(Mensaje mensaje){
- mqtt.sendMessaje("test", mensaje.toJson());
+ mqtt.sendMessaje("hospital", mensaje.toJson());
 }
 Future<List<Mensaje>> getConvesation() async {
   print("obteniendo Conversacion de Hive");

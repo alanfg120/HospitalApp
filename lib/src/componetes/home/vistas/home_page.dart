@@ -42,7 +42,8 @@ class _HomePageState extends State<HomePage> {
   Widget lastPage;
   IconData lastcolor;
   
-  bool syncauto;
+  bool connect;
+
   var  colorPrimary     = Color(0xFF01C6BD); 
   var  colorSecundary   = Color(0XFFE4097F); 
 
@@ -73,7 +74,8 @@ class _HomePageState extends State<HomePage> {
       });
       conectionMqtt.onData((data){
        print(data);
-       scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(data)));
+      
+       scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(data),behavior: SnackBarBehavior.floating));
      });
         return Scaffold(
                key                 : scaffoldKey,
@@ -165,7 +167,7 @@ class _HomePageState extends State<HomePage> {
     
            switch (currentindex) {
                     case 0  : 
-                              dialogoNewCita(context);
+                             
                               break;
                     case 1  : //Navigator.pushNamed(context, 'formproducto'); 
                               //FocusScope.of(context).requestFocus(FocusNode());
@@ -197,26 +199,7 @@ class _HomePageState extends State<HomePage> {
                            backgroundColor : colorSecundary,
                            );
     
-       dialogoNewCita(BuildContext context) {
-        showDialog(
-            context: context,
-            builder:(context)=>
-            AlertDialog(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title    : Text(
-                       "Solicitando Turno Espere",
-                        style: TextStyle(color: Colors.white),
-                       ),
-            content  :Container(
-                      height   : 35,
-                      alignment: Alignment.center,
-                      child    : CircularProgressIndicator(
-                                 valueColor:AlwaysStoppedAnimation<Color>(Colors.white),
-                      )),  
-            )
-          );
-      }
+      
      
 
 

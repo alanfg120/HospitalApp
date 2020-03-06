@@ -1,12 +1,12 @@
 import 'package:hive/hive.dart';
-import 'package:hospitalapp/src/componetes/citas/models/status_model.dart';
+
 import 'package:hospitalapp/src/componetes/login/models/status_model.dart';
 import 'package:hospitalapp/src/componetes/login/models/usuario_model.dart';
 import 'package:http/http.dart' as http;
 
 class LoginRepocitorio {
   final headers = {"Content-Type": "application/json"};
-  final url = "http://localhost:3000/usuarios/";
+  final url = "http://192.168.0.17:3000/usuarios/";
 
   Future<Usuario> getUsuario() async {
     final usuarioBox = await Hive.openBox<Usuario>('usuario');

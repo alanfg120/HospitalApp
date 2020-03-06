@@ -25,17 +25,20 @@ function setup() {
   console.log("servidor MQTT Listo");
 }
 
-servermqtt.on("clientConnected", function(client) {
+servermqtt.on("clientConnected", function(client) {ftp
   console.log("client connected", client.id);
 });
 
 servermqtt.on("clientDisconnecting", function(client) {
   console.log("client disconect", client.id);
 });
+servermqtt.on("clientDisconnected", function(client) {
+  console.log("client disconect", client.id);
+});
 
-/* servermqtt.on("published",  (packet, client) => {
+servermqtt.on("published",  (packet, client) => {
   let messaje = packet.payload.toString();
   console.log(packet.topic,messaje);
 
-}) */
+})
 module.exports = servermqtt;

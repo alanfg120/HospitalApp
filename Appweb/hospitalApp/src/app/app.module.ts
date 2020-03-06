@@ -15,6 +15,7 @@ import {
   MqttModule,
   IMqttServiceOptions
 } from 'ngx-mqtt';
+import { TurnoReducer } from './turnos/reducer/turno_reducer';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'localhost',
@@ -34,7 +35,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ turnos: TurnosReducer }),
+    StoreModule.forRoot({ turnos: TurnosReducer, turno:TurnoReducer}),
     EffectsModule.forRoot([TurnosEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25

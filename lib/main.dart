@@ -20,6 +20,7 @@ import 'package:hospitalapp/src/componetes/login/bloc/login_bloc.dart';
 import 'package:hospitalapp/src/componetes/login/data/login_repocitorio.dart';
 import 'package:hospitalapp/src/componetes/login/models/usuario_model.dart';
 import 'package:hospitalapp/src/componetes/login/vistas/login_page.dart';
+import 'package:hospitalapp/src/plugins/push_notification.dart';
 
 
 import 'package:path_provider/path_provider.dart';
@@ -35,8 +36,10 @@ void main() async {
  Hive.init(directorio.path);
  Hive.registerAdapter(UsuarioAdapter());
  Hive.registerAdapter(TurnoAdapter());
-/*  Box<Usuario> usuarioBox = await Hive.openBox<Usuario>('usuario');
+ /* Box<Usuario> usuarioBox = await Hive.openBox<Usuario>('usuario');
  usuarioBox.clear(); */
+/*  final push = PushNotificatios();
+ push.init(); */
  runApp(MyApp());
 
 }

@@ -1,53 +1,18 @@
-<div class="contenedor">
-  <div class="turnos">
-    <mat-card class="example-card">
+<div class="loading" *ngIf="loading$ | async">
+  <mat-spinner color="accent" diameter="40"></mat-spinner>
+</div>
+<div class="contenedor animatedSlow fadeInLeft">
+  <div class="turno" *ngFor="let item of turnos$ | async; let i = index">
+    <mat-card
+      class="turno-card"
+      (click)="getturno(item,i+1)"
+      [routerLink]="item.cedula"
+    >
       <mat-card-header>
-        <div mat-card-avatar class="avatar">1</div>
-        <mat-card-title>Alan Fabian Herrera</mat-card-title>
-        <mat-card-subtitle>Alanfg120@gmail.com</mat-card-subtitle>
-        <mat-card-subtitle>CC 1122123793</mat-card-subtitle>
-        <mat-card-subtitle>Cita Odontologia</mat-card-subtitle>
+        <div mat-card-avatar class="avatar">{{ i + 1 }}</div>
+        <mat-card-title>{{ item.nombre }}</mat-card-title>
+        <mat-card-subtitle>{{ item.cedula }}</mat-card-subtitle>
       </mat-card-header>
-
-      <mat-card-content>
-        <div class="title">Asignacion Automatica</div>
-        <div class="asignacion">SI</div>
-        <div class="title">Observaciones</div>
-        <div>
-          Nececito una cita Para Lectura de Examenes Nececito una cita Para
-          Lectura de Examenes Nececito una cita Para Lectura de Examenes
-        </div>
-      </mat-card-content>
     </mat-card>
-  </div>
-  <div class="chat" [ngStyle]="{'grid-template-rows': mesagge ? '76px 1fr 1fr' : null  }">
-    <div class="usuario">
-      <div class="avatar">A</div>
-      <div class="nombre">
-        <div>Alan Fabian Herrera</div>
-        <div class="subtitle">alanfg120@gmail.com</div>
-      </div>
-    </div>
-    <div class="mensajes" ></div>
-    <div class="send">
-      <div class="sendinput">
-        <span class="avatar" (click)="mesagge=!mesagge">
-          <mat-icon>message</mat-icon>
-        </span>
-        <textarea
-          name="Text1"
-          col="10"
-          placeholder="Escribir Mensaje"
-          class="inputchat"
-        ></textarea>
-        <span class="avatar">
-          <mat-icon>send</mat-icon>
-        </span>
-      </div>
-     
-      <div class="messages animated slideInUp" *ngIf="mesagge">
-         mensajes personalizados
-      </div>
-    </div>
   </div>
 </div>

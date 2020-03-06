@@ -9,7 +9,7 @@ const routes: Routes = [
     component:HomeComponent,
     children:[
       {
-        path:'turnos',
+        path:'',
         loadChildren:"./../turnos/turnos.module#TurnosModule"
       }
     ]

@@ -4,12 +4,13 @@ import * as moment from "moment";
 import { loadTurnos, loadedTurnos } from "../actions/turnos_actions";
 
 let initialturnos: Turno[] = [];
-export interface IngresosState {
+
+export interface TurnosState {
   turnos: Turno[];
   isloading?: boolean;
 }
 
-export const initialState: IngresosState = {
+export const initialState: TurnosState = {
   turnos: []
 };
 
@@ -20,7 +21,7 @@ const _TurnosReducer = createReducer(
   }),
 
   on(loadedTurnos, (state, { turnos }) => {
-    initialturnos = turnos.reverse();
+    initialturnos = turnos;
     return { ...state, turnos, isloading: false };
   })
 );

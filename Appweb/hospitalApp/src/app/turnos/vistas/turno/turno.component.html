@@ -1,0 +1,63 @@
+
+<div class="contenedor animatedSlow fadeIn">
+  <div class="turnos">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="avatar">{{ turno.numero }}</div>
+        <mat-card-title>{{ turno.nombre }}</mat-card-title>
+        <mat-card-subtitle>{{ turno.email }}</mat-card-subtitle>
+        <mat-card-subtitle>CC {{ turno.cedula }}</mat-card-subtitle>
+        <mat-card-subtitle>Cita {{ turno.tipocita }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="title">Asignacion Automatica</div>
+        <div class="asignacion">{{ turno.automatica ? "SI" : "NO" }}</div>
+        <div class="title">Observaciones</div>
+        <div>
+          {{ turno.observaciones }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div
+    class="chat"
+    [ngStyle]="{ 'grid-template-rows': infomessage ? '76px calc(50vh - 104px) 1fr' : null }"
+  >
+    <div class="usuario">
+      <div class="avatar">{{turno.nombre[0]}}</div>
+      <div class="nombre">
+        <div>{{turno.nombre}}</div>
+        <div class="subtitle">{{turno.email}}</div>
+      </div>
+    </div>
+    <div class="mensajes">
+      <div class="mensajechat" *ngFor="let item of mensajes$ | async" [ngClass]="{'rigth': item.recibido}">
+       {{item.mensaje}}
+     </div>
+    
+    </div>
+    <div class="send">
+      <div class="sendinput">
+        <span class="avatar" (click)="infomessage = !infomessage">
+          <mat-icon>message</mat-icon>
+        </span>
+        <input
+          #texto
+          name="Text1"
+          col="10"
+          placeholder="Escribir Mensaje"
+          class="inputchat"
+          (keydown.enter)="sendMensajes()"
+        >
+        <span class="avatar">
+          <mat-icon (click)="sendMensajes()">send</mat-icon>
+        </span>
+      </div>
+
+      <div class="messages animated slideInUp" *ngIf="infomessage">
+        mensajes personalizados
+      </div>
+    </div>
+  </div>
+</div>

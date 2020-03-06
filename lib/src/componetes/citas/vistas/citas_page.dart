@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hospitalapp/src/componetes/citas/bloc/citas_bloc.dart';
-import 'package:hospitalapp/src/componetes/citas/models/turno_model.dart';
-import 'package:hospitalapp/src/componetes/login/bloc/login_bloc.dart';
+
 
 class CitasPage extends StatefulWidget {
   CitasPage({Key key}) : super(key: key);
@@ -69,7 +68,7 @@ class _CitasPageState extends State<CitasPage> {
 
   
 
-  void _sendTurno(BuildContext context) {
+ /*  void _sendTurno(BuildContext context) {
     final stateUsuario = context.bloc<LoginBloc>().state;
     if(stateUsuario is AutenticadoState){
       final turno = Turno(
@@ -81,5 +80,5 @@ class _CitasPageState extends State<CitasPage> {
 
     }
       
-  }
+  } */
 }
