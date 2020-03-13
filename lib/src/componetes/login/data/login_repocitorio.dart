@@ -2,12 +2,13 @@ import 'package:hive/hive.dart';
 
 import 'package:hospitalapp/src/componetes/login/models/status_model.dart';
 import 'package:hospitalapp/src/componetes/login/models/usuario_model.dart';
+import 'package:hospitalapp/src/plugins/push_notification.dart';
 import 'package:http/http.dart' as http;
 
 class LoginRepocitorio {
   final headers = {"Content-Type": "application/json"};
-  final url = "http://192.168.0.17:3000/usuarios/";
-
+  final url = "https://hospital.apptransportes.com/usuarios/";
+  final push = PushNotificatios();
   Future<Usuario> getUsuario() async {
     final usuarioBox = await Hive.openBox<Usuario>('usuario');
     //usuarioBox.clear();
@@ -19,6 +20,7 @@ class LoginRepocitorio {
 
   Future<StatusLogin> setUsuario(Usuario usuario) async {
     try {
+      usuario.idPush = await push.getoken();
       final resp =
           await http.post('$url/new', body: usuario.toJson(), headers: headers);
       if (resp.statusCode == 200) return StatusLogin.registrado;

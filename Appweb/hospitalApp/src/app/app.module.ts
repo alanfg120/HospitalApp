@@ -16,6 +16,8 @@ import {
   IMqttServiceOptions
 } from 'ngx-mqtt';
 import { TurnoReducer } from './turnos/reducer/turno_reducer';
+import { TurnoEffects } from './turnos/effects/turno.effects';
+import { LoginReducer } from './login/reducers/login_reducer';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'localhost',
@@ -23,7 +25,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   path: '/mqtt',
   username:'alice',
   password:'secret',
-
+  //protocol: "wss"
 };
 
 @NgModule({
@@ -35,8 +37,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ turnos: TurnosReducer, turno:TurnoReducer}),
-    EffectsModule.forRoot([TurnosEffects]),
+    StoreModule.forRoot({ turnos: TurnosReducer, turno:TurnoReducer,login:LoginReducer}),
+    EffectsModule.forRoot([TurnosEffects,TurnoEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
   }),

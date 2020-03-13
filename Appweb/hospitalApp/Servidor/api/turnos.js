@@ -20,8 +20,6 @@ router.get("/", async (req, res) => {
   let { db, conection } = await mongo();
   try {
     let data = await db.collection("turnos").find().toArray();
-
-    
     res.status(200).send(data);
   } catch (err) {
     res.status(400).send() 

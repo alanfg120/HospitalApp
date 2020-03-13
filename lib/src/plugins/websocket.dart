@@ -63,7 +63,7 @@ class MqttService {
       topic = usuario.cedula;
     }
     else  topic = 'initial';
-    client = mqtt.MqttClient('ws://192.168.0.17', '');
+    client = mqtt.MqttClient('ws://hospital.apptransportes.com', '');
     client.port = 9001;
     client.useWebSocket = true;
    

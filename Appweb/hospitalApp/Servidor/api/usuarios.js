@@ -6,13 +6,19 @@ const jwt = require("jsonwebtoken");
 const jwtClave = "A679hff";
 
 router.post("/new", async (req, res) => {
+  
+  
   let { db, conection } = await mongo();
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
+ 
+    
     await db.collection("usuarios").insertOne(req.body);
     res.status(200).send();
   } catch (err) {
     res.status(400).send();
+    console.log(err);
+    
   }
   conection.close();
 });

@@ -36,10 +36,10 @@ void main() async {
  Hive.init(directorio.path);
  Hive.registerAdapter(UsuarioAdapter());
  Hive.registerAdapter(TurnoAdapter());
- /* Box<Usuario> usuarioBox = await Hive.openBox<Usuario>('usuario');
+/*  Box<Usuario> usuarioBox = await Hive.openBox<Usuario>('usuario');
  usuarioBox.clear(); */
-/*  final push = PushNotificatios();
- push.init(); */
+ final push = PushNotificatios();
+ push.init();
  runApp(MyApp());
 
 }

@@ -2,11 +2,9 @@ import 'dart:convert';
 import 'package:hive/hive.dart';
 part 'usuario_model.g.dart';
 
-
-@HiveType(typeId:0)
-
+@HiveType(typeId: 0)
 class Usuario {
-
+  
   @HiveField(0)
   String nombre;
   @HiveField(1)
@@ -17,21 +15,32 @@ class Usuario {
   String password;
   @HiveField(4)
   String token;
-  Usuario({this.nombre, this.email, this.cedula, this.password,this.token});
+  @HiveField(5)
+  String idPush;
 
-  String toJson()=>json.encode({
-   "nombre"  :this.nombre,
-   "email"   :this.email,
-   "cedula"  :this.cedula,
-   "password":this.password
-  });
+  Usuario(
+      {this.nombre,
+      this.email,
+      this.cedula,
+      this.password,
+      this.token,
+      this.idPush});
 
- Usuario.fromJson(String data) {
-    final Map<String,dynamic> dataJson = json.decode(data);
-    nombre   = dataJson['nombre'] ?? '';
-    email    = dataJson['email']  ?? '';
-    cedula   = dataJson['cedula'] ?? '';
+  String toJson() => json.encode({
+        "nombre"   : this.nombre,
+        "email"    : this.email,
+        "cedula"   : this.cedula,
+        "password" : this.password,
+        "idPush"   : this.idPush
+      });
+
+  Usuario.fromJson(String data) {
+    final Map<String, dynamic> dataJson = json.decode(data);
+    nombre   = dataJson['nombre']   ?? '';
+    email    = dataJson['email']    ?? '';
+    cedula   = dataJson['cedula']   ?? '';
     password = dataJson['password'] ?? '';
-    token    = dataJson['token'] ?? '';
+    token    = dataJson['token']    ?? '';
+    idPush   = dataJson['idPush']   ?? '';
   }
 }

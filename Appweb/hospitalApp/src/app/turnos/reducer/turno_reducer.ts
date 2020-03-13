@@ -7,6 +7,7 @@ import {
   sendMensaje
 } from "../actions/turno_actions";
 import { Mensaje } from "../models/mensaje_model";
+import { Cita } from '../models/cita_model';
 
 let turno = new Turno();
 turno.nombre = "ALan";
@@ -20,6 +21,7 @@ export interface TurnoState {
   turno: Turno;
   isloading?: boolean;
   mensajes: Mensaje[];
+  cita?:Cita; 
 }
 
 export const initialState: TurnoState = {
@@ -37,7 +39,6 @@ const _TurnoReducer = createReducer(
     return { ...state, mensajes: state.mensajes.concat(mensaje) };
   }),
   on(sendMensaje, (state, { mensaje }) => {
-    
     return { ...state, mensajes: state.mensajes.concat(mensaje) };
   })
 );

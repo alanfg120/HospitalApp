@@ -6,11 +6,11 @@ import { TurnoComponent } from './vistas/turno/turno.component';
 
 const routes: Routes = [
   {
-    path:'',
+    path:'turnos',
     component:TurnosComponent
   },
   {
-    path:':cedula',
+    path:'turno/:turno',
     component:TurnoComponent
 
   }

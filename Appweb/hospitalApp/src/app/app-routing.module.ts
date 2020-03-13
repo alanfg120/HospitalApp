@@ -4,23 +4,23 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "",
+    path: "login",
     loadChildren: "./login/login.module#LoginModule"
   },
   {
-    path:"Home",
+    path:"",
     loadChildren: "./home/home.module#HomeModule" ,
     //canActivate:[LoginService]
   },
-/*   { 
+  { 
      path: "**", 
      //loadChildren: "./login/login.module#LoginModule"
      loadChildren: "./home/home.module#HomeModule" , 
-  } */
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{useHash:true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

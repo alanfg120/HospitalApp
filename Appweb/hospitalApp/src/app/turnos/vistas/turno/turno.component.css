@@ -8,8 +8,10 @@
 
 .turnos {
   padding-top: 20px;
+  padding-right: 10px;
   border-right: 1px solid #d8d8d8;
   overflow-y: scroll;
+
 }
 
 .example-card {
@@ -106,7 +108,6 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
   overflow-y: scroll;
 }
 .mensajechat {
@@ -122,4 +123,8 @@
   align-self: flex-end;
   background-color: honeydew;
   border: none;
+}
+mat-form-field.mat-form-field {
+  font-size: 13px;
+  width: 100%;
 }

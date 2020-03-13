@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Usuario } from "../../models/usuario_class";
+import { Usuario } from "../../models/usuario_model";
 
 @Component({
   selector: "app-login",
@@ -10,5 +10,7 @@ export class LoginComponent implements OnInit {
   usuario = new Usuario();
   constructor() {}
   ngOnInit() {}
-  login(form) {}
+  login(form) {
+    
+  }
 }

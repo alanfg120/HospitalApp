@@ -2,12 +2,12 @@ const mongo = require("./../mongo");
 var schedule = require("node-schedule");
 const { ObjectId } = require("mongodb");
 
-var activarTurnos = schedule.scheduleJob("00 11 * * *", async () => {
+var activarTurnos = schedule.scheduleJob("00 16 * * *", async () => {
  let { db, conection } = await mongo();
   try {
-    await db.collection("turnos")
-            .updateOne({ _id: ObjectId("5e5143398052830aa396b6e6") },
-                       { $set: { activo: true } }
+    await db.collection("estado")
+            .updateOne({ _id: ObjectId("5e630c2f2ae725ec369037ea") },
+                       { $set: { turnos: true } }
       );
     console.log("listo");
   } catch (err) {
@@ -16,14 +16,14 @@ var activarTurnos = schedule.scheduleJob("00 11 * * *", async () => {
   conection.close();
 });
 
-var desactivarTurnos = schedule.scheduleJob("00 12 * * *", async () => {
+var desactivarTurnos = schedule.scheduleJob("00 18 * * *", async () => {
  let { db, conection } = await mongo();
   try {
     await db
-      .collection("turnos")
+      .collection("estado")
       .updateOne(
-        { _id: ObjectId("5e5143398052830aa396b6e6") },
-        { $set: { activo: false } }
+        { _id: ObjectId("5e630c2f2ae725ec369037ea") },
+        { $set: { turnos: false } }
       );
     console.log("listo");
   } catch (err) {

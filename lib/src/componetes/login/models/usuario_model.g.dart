@@ -22,13 +22,14 @@ class UsuarioAdapter extends TypeAdapter<Usuario> {
       cedula: fields[2] as String,
       password: fields[3] as String,
       token: fields[4] as String,
+      idPush: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Usuario obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.nombre)
       ..writeByte(1)
@@ -38,6 +39,8 @@ class UsuarioAdapter extends TypeAdapter<Usuario> {
       ..writeByte(3)
       ..write(obj.password)
       ..writeByte(4)
-      ..write(obj.token);
+      ..write(obj.token)
+      ..writeByte(5)
+      ..write(obj.idPush);
   }
 }

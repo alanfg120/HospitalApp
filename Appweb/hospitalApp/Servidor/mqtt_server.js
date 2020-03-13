@@ -1,11 +1,14 @@
 var mosca = require("mosca")
 
+SECURE_KEY= "/etc/letsencrypt/live/hospital.apptransportes.com/privkey.pem"
+SECURE_CERT="/etc/letsencrypt/live/hospital.apptransportes.com/fullchain.pem"
+
   moscaSetting = {
     interfaces: [
       { type: "mqtt", port: 1883 },
       //{ type: "mqtts", port: 8883, credentials: { keyPath: SECURE_KEY, certPath: SECURE_CERT } },
-      { type: "http", port: 9001, bundle: true }
-      //{ type: "https", port: 3001, bundle: true, credentials: { keyPath: SECURE_KEY, certPath: SECURE_CERT } }
+      { type: "http", port: 9001, bundle: true },
+      //{ type: "https", port: 5001, bundle: true, credentials: { keyPath: SECURE_KEY, certPath: SECURE_CERT } }
     ],
     publishNewClient: false,
     
@@ -25,7 +28,7 @@ function setup() {
   console.log("servidor MQTT Listo");
 }
 
-servermqtt.on("clientConnected", function(client) {ftp
+servermqtt.on("clientConnected", function(client) {
   console.log("client connected", client.id);
 });
 
