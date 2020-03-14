@@ -1,65 +1,56 @@
-.container{
-    /* background-image: url("../../../assets/img/transporte-carga.jpg"); */
-    background-repeat: no-repeat;
-    background-size: cover;
-    box-sizing: border-box;
-    width: 100vw;
-    height: 100vh;
-    box-sizing: border-box;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-   
-   }
-   
-   .login{
-   display: block;
-   width: 350px;
-   height: 400px;
-   border-radius: 13px;
-   background-color: lightblue;
-   padding: 30px;
-   }
-   
-   
-   .login img{
-    display: block;
-    margin: auto;
-    margin-bottom: 20px;
-   
-   }
-   
-   .ingresar{
-   
-   width: 100%;
-   padding: 5px;
- 
-   color: white;
-   border-radius: 5px;
-   border: none;
-   font-size:12pt;
-   font-weight: bolder;
-   cursor: pointer;
-   
-   }
-   
-   .ingresar:hover{
-   
-   opacity: 0.8;   
-   }
-   
-   
-   mat-form-field.mat-form-field {
-       font-size: 14px;
-       width: 100%;
-       margin-bottom: 15px;
-      text-align: center;
-     
-      
-     }
-    
-     .warning{
-       background-color: #ffffff !important;
-       color: red !important;
-       text-align: center !important;
-     }
+.container {
+  /* background-image: url("../../../assets/img/transporte-carga.jpg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
+  display: block;
+  width: 350px;
+  height: 400px;
+  border-radius: 13px;
+
+  padding: 30px;
+}
+
+.login img {
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.ingresar {
+  width: 100%;
+  padding: 5px;
+
+  color: white;
+  border-radius: 5px;
+  border: none;
+  font-size: 12pt;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.ingresar:hover {
+  opacity: 0.8;
+}
+
+mat-form-field.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.warning {
+  background-color: #ffffff !important;
+  color: red !important;
+  text-align: center !important;
+}

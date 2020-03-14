@@ -1,7 +1,5 @@
 export class Usuario {
-
-    public username:string;
-    public pwd:string;
-  
-   
-  }
+  public email: string;
+  public password: string;
+  public token: string;
+}

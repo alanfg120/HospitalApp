@@ -5,8 +5,8 @@
   <div class="turno" *ngFor="let item of turnos$ | async; let i = index">
     <mat-card
       class="turno-card"
-      (click)="getturno(item,i+1)"
-      [routerLink]="['/turno',i+1]"
+      (click)="getturno(item, i + 1)"
+      [routerLink]="['/Home/turnos', i + 1]"
     >
       <mat-card-header>
         <div mat-card-avatar class="avatar">{{ i + 1 }}</div>
