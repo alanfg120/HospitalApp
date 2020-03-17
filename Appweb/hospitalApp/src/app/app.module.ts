@@ -11,8 +11,7 @@ import { TurnosEffects } from "./turnos/effects/turnos_effect";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { HttpClientModule } from "@angular/common/http";
 import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
-import { TurnoReducer } from "./turnos/reducer/turno_reducer";
-import { TurnoEffects } from "./turnos/effects/turno.effects";
+
 import { LoginReducer } from "./login/reducers/login_reducer";
 import { LoginEffects } from "./login/effects/login_effects";
 import { Interceptor } from "./interceptor_http";
@@ -40,11 +39,11 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     BrowserAnimationsModule,
     StoreModule.forRoot({
       turnos: TurnosReducer,
-      turno: TurnoReducer,
+   
       login: LoginReducer,
       router: routerReducer
     }),
-    EffectsModule.forRoot([TurnosEffects, TurnoEffects, LoginEffects]),
+    EffectsModule.forRoot([TurnosEffects,LoginEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     }),

@@ -9,14 +9,22 @@ import {
   AfterViewInit
 } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { TurnoState } from "../../reducer/turno_reducer";
+
 import { Observable, Subscription } from "rxjs";
 import { Turno } from "../../models/turnos_model";
-import { Router } from "@angular/router";
+import { Router, RouterState } from "@angular/router";
 import { MqttService, IMqttMessage } from "ngx-mqtt";
-import { requestMensaje, sendMensaje } from "../../actions/turno_actions";
+
 import { Mensaje } from "../../models/mensaje_model";
 import { Cita } from "../../models/cita_model";
+
+import { TurnosState } from "../../reducer/turnos_reducer";
+import { getTurno } from "../../selectors/turnos_selector";
+
+import { requestMensaje, sendMensaje } from "../../actions/turnos_actions";
+import * as moment from "moment";
+import { finalize, map, first, every, debounceTime } from "rxjs/operators";
+import { eventNames } from "cluster";
 
 @Component({
   selector: "app-turno",
@@ -29,34 +37,37 @@ export class TurnoComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("content", { static: false }) content: ElementRef;
 
   subscription: Subscription;
-  turno$: Observable<Turno> = this.store.select(state => state.turno.turno);
-  mensajes$: Observable<Mensaje[]> = this.store.select(
-    state => state.turno.mensajes
-  );
-  turno: Turno;
+  //turno$: Observable<Turno> = this.store.select(state => state.turno.turno);
+  params$ = this.storerouter.select((state: any) => state.router.state.params);
+  mensajes$: Observable<Mensaje[]>;
+  turno$: Observable<Turno>;
   infomessage: boolean;
-
+  index: number;
+  topic: string;
   constructor(
-    private store: Store<{ turno: TurnoState }>,
+    private store: Store<{ turno: TurnosState }>,
+    private storerouter: Store<{ router: RouterState }>,
     public router: Router,
     private _mqttService: MqttService
   ) {}
 
   ngOnInit() {
-    this.turno$.subscribe((data: Turno) => (this.turno = data));
+    this.params$.subscribe(param => {
+      this.index = param.turno;
+      this.turno$ = this.store.select(getTurno, parseInt(param.turno));
+    });
+    this.turno$.pipe(debounceTime(50)).subscribe(data=>this.topic=data.cedula)
     this.subscription = this._mqttService
       .observe("hospital")
       .subscribe((message: IMqttMessage) => {
         let mensaje: Mensaje;
         mensaje = JSON.parse(message.payload.toString());
-        this.store.dispatch(requestMensaje({ mensaje }));
+        this.store.dispatch(requestMensaje({ mensaje,index:this.index}));
       });
   }
-
   ngAfterViewInit() {
     this.messages.changes.subscribe(this.scrollToBottom);
   }
-
   scrollToBottom = () => {
     try {
       this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
@@ -64,16 +75,18 @@ export class TurnoComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    console.log("unsubcribe");
   }
   sendMensajes() {
-    console.log(this.turno.cedula);
+    console.log(this.topic);
+
     let mensaje = new Mensaje();
     mensaje.mensaje = this.text.nativeElement.value;
     mensaje.id = "7878";
-    mensaje.fecha = Date.now().toString();
+    mensaje.fecha = moment();
     mensaje.recibido = false;
-    this.store.dispatch(sendMensaje({ mensaje, topic: this.turno.cedula }));
+    this.store.dispatch(
+      sendMensaje({ mensaje, topic: "123456", index: this.index })
+    );
     this.text.nativeElement.value = "";
   }
 }

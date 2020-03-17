@@ -28,16 +28,11 @@ export class HomeComponent implements OnInit {
     this.mqtt.state.subscribe(conection => {
       switch (conection) {
         case 0:
-          this.snack.open("Sin Conexion al servidor", "Aceptar", {
-
-          });
+          this.snack.open("Sin Conexion al servidor", "Aceptar", {});
           break;
-     
 
         case 2:
-          this.snack.open("conexion establecida", "Aceptar", {
-     
-          });
+          this.snack.open("conexion establecida", "Aceptar", {});
           break;
 
         default:

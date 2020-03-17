@@ -2,19 +2,19 @@
   <div class="turnos">
     <mat-card class="example-card">
       <mat-card-header>
-        <div mat-card-avatar class="avatar">{{ turno.numero }}</div>
-        <mat-card-title>{{ turno.nombre }}</mat-card-title>
-        <mat-card-subtitle>{{ turno.email }}</mat-card-subtitle>
-        <mat-card-subtitle>CC {{ turno.cedula }}</mat-card-subtitle>
-        <mat-card-subtitle>Cita {{ turno.tipocita }}</mat-card-subtitle>
+        <div mat-card-avatar class="avatar">{{ (turno$ | async)?.numero }}</div>
+        <mat-card-title>{{ (turno$ | async)?.nombre }}</mat-card-title>
+        <mat-card-subtitle>{{ (turno$ | async)?.email }}</mat-card-subtitle>
+        <mat-card-subtitle>CC {{ (turno$ | async)?.cedula }}</mat-card-subtitle>
+        <mat-card-subtitle>Cita {{ (turno$ | async)?.tipocita }}</mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-content>
         <div class="title">Asignacion Automatica</div>
-        <div class="asignacion">{{ turno.automatica ? "SI" : "NO" }}</div>
+        <div class="asignacion">{{ (turno$ | async)?.automatica ? "SI" : "NO" }}</div>
         <div class="title">Observaciones</div>
         <div>
-          {{ turno.observaciones }}
+          {{ (turno$ | async)?.observaciones }}
         </div>
       </mat-card-content>
     </mat-card>
@@ -62,17 +62,17 @@
     }"
   >
     <div class="usuario">
-      <div class="avatar">{{ turno.nombre[0] }}</div>
+      <div class="avatar">{{ (turno$ | async)?.nombre[0] }}</div>
       <div class="nombre">
-        <div>{{ turno.nombre }}</div>
-        <div class="subtitle">{{ turno.email }}</div>
+        <div>{{ (turno$ | async)?.nombre }}</div>
+        <div class="subtitle">{{ (turno$ | async)?.email }}</div>
       </div>
     </div>
     <div class="mensajes" #content>
       <div
         class="mensajechat animated slideInUp"
         #messages
-        *ngFor="let item of mensajes$ | async"
+        *ngFor="let item of  (turno$ | async)?.mensajes"
         [ngClass]="{ rigth: item.recibido }"
       >
         {{ item.mensaje }}

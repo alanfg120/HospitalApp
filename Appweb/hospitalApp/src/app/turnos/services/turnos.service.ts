@@ -12,5 +12,7 @@ export class TurnosService {
 
   getTurnos():Observable<Turno[]>{
     return this.http.get<Turno[]>(`${environment.apiUrl}/turnos`)
+    
+    
   }
 }

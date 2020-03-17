@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { loadTurnos } from "../../actions/turnos_actions";
 import { TurnoState } from "../../reducer/turno_reducer";
 import { loadTurno } from "../../actions/turno_actions";
+import { getTurnos } from "../../selectors/turnos_selector";
 
 @Component({
   selector: "app-turnos",
@@ -13,18 +14,14 @@ import { loadTurno } from "../../actions/turno_actions";
   styleUrls: ["./turnos.component.css"]
 })
 export class TurnosComponent implements OnInit {
-  turnos$: Observable<Turno[]> = this.storeTurnos.select(
-    state => state.turnos.turnos
-  );
+  turnos$: Observable<Turno[]> = this.storeTurnos.select(getTurnos);
   loading$: Observable<boolean> = this.storeTurnos.select(
     state => state.turnos.isloading
   );
   constructor(
     private storeTurnos: Store<{ turnos: TurnosState }>,
     private storeTurno: Store<{ turno: TurnoState }>
-  ) {
-
-  }
+  ) {}
   ngOnInit() {}
   getturno(turno: Turno, index: number) {
     turno.numero = index.toString();
