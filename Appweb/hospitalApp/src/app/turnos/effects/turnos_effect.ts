@@ -17,8 +17,7 @@ export class TurnosEffects {
         this.turnosService.getTurnos().pipe(
           map(turnos => {
             turnos.forEach((turno,index)=>{
-              turno.mensajes=[]
-              turno.fecha=moment()
+        
               turno.numero = (index+1).toString() 
             }
               )

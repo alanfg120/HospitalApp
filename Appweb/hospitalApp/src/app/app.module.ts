@@ -19,7 +19,7 @@ import { StoreRouterConnectingModule, routerReducer } from "@ngrx/router-store";
 import { CustomSerializer } from "./router-store/custom-route-serializer";
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: "192.168.0.17",
+  hostname: "localhost",
   port: 9001,
   path: "/mqtt",
   username: "alice",
@@ -39,7 +39,6 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     BrowserAnimationsModule,
     StoreModule.forRoot({
       turnos: TurnosReducer,
-   
       login: LoginReducer,
       router: routerReducer
     }),

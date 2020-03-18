@@ -4,8 +4,7 @@ import { Store } from "@ngrx/store";
 import { Turno } from "../../models/turnos_model";
 import { Observable } from "rxjs";
 import { loadTurnos } from "../../actions/turnos_actions";
-import { TurnoState } from "../../reducer/turno_reducer";
-import { loadTurno } from "../../actions/turno_actions";
+
 import { getTurnos } from "../../selectors/turnos_selector";
 
 @Component({
@@ -20,11 +19,11 @@ export class TurnosComponent implements OnInit {
   );
   constructor(
     private storeTurnos: Store<{ turnos: TurnosState }>,
-    private storeTurno: Store<{ turno: TurnoState }>
+
   ) {}
   ngOnInit() {}
   getturno(turno: Turno, index: number) {
     turno.numero = index.toString();
-    this.storeTurno.dispatch(loadTurno({ turno }));
+ 
   }
 }
