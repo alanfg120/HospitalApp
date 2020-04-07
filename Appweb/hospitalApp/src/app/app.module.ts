@@ -17,6 +17,8 @@ import { LoginEffects } from "./login/effects/login_effects";
 import { Interceptor } from "./interceptor_http";
 import { StoreRouterConnectingModule, routerReducer } from "@ngrx/router-store";
 import { CustomSerializer } from "./router-store/custom-route-serializer";
+import { MensajeReducer } from './mensajes/reducers/mensajes.reducer';
+import { MensajesEffects } from './mensajes/effects/mensajes_effects';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: "localhost",
@@ -40,9 +42,10 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     StoreModule.forRoot({
       turnos: TurnosReducer,
       login: LoginReducer,
-      router: routerReducer
+      router: routerReducer,
+      mensajes: MensajeReducer
     }),
-    EffectsModule.forRoot([TurnosEffects,LoginEffects]),
+    EffectsModule.forRoot([TurnosEffects,LoginEffects,MensajesEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     }),

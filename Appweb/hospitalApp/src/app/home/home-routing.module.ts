@@ -9,8 +9,12 @@ const routes: Routes = [
     component:HomeComponent,
     children:[
       {
-        path:'',
+        path:'turnos',
         loadChildren:"./../turnos/turnos.module#TurnosModule"
+      },
+      {
+        path:'mensajes',
+        loadChildren:"./../mensajes/mensajes.module#MensajesModule"
       }
     ]
   }

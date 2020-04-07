@@ -29,16 +29,10 @@ router.get("/", async (req, res) => {
 });
 
 router.put("/update/mensaje", async (req, res) => {
-   console.log(req.body);
+  console.log(req.body);
+  
    
-  let { db, conection } = await mongo();
-  try {
-    await db.collection("turnos").updateOne({ cedula: req.body.cedula }, { $push: { mensajes: req.body.mensaje } })
-    res.status(200).send("hola")
-  } catch (err) {
-    res.status(400).send(err)
-  }
-  conection.close()
+
 })
 
 module.exports = router;

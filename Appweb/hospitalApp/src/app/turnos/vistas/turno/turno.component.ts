@@ -14,17 +14,13 @@ import { Observable, Subscription } from "rxjs";
 import { Turno } from "../../models/turnos_model";
 import { Router, RouterState } from "@angular/router";
 import { MqttService, IMqttMessage } from "ngx-mqtt";
-
 import { Mensaje } from "../../models/mensaje_model";
 import { Cita } from "../../models/cita_model";
-
 import { TurnosState } from "../../reducer/turnos_reducer";
 import { getTurno } from "../../selectors/turnos_selector";
-
 import { requestMensaje, sendMensaje } from "../../actions/turnos_actions";
-import * as moment from "moment";
-import { finalize, map, first, every, debounceTime } from "rxjs/operators";
-import { eventNames } from "cluster";
+import { debounceTime } from "rxjs/operators";
+
 
 @Component({
   selector: "app-turno",
@@ -56,13 +52,15 @@ export class TurnoComponent implements OnInit, OnDestroy, AfterViewInit {
       this.index = param.turno;
       this.turno$ = this.store.select(getTurno, parseInt(param.turno));
     });
-    this.turno$.pipe(debounceTime(50)).subscribe(data=>this.topic=data.cedula)
+    this.turno$
+      .pipe(debounceTime(500))
+      .subscribe(data => (this.topic = data.cedula));
     this.subscription = this._mqttService
       .observe("hospital")
       .subscribe((message: IMqttMessage) => {
         let mensaje: Mensaje;
         mensaje = JSON.parse(message.payload.toString());
-        this.store.dispatch(requestMensaje({ mensaje,index:this.index}));
+        this.store.dispatch(requestMensaje({ mensaje, index: this.index }));
       });
   }
   ngAfterViewInit() {
@@ -77,15 +75,11 @@ export class TurnoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscription.unsubscribe();
   }
   sendMensajes() {
-    console.log(this.topic);
-
     let mensaje = new Mensaje();
     mensaje.mensaje = this.text.nativeElement.value;
-    mensaje.id = "7878";
-    mensaje.fecha = moment();
     mensaje.recibido = false;
     this.store.dispatch(
-      sendMensaje({ mensaje, topic: "123456", index: this.index })
+      sendMensaje({ mensaje, topic: this.topic, index: this.index })
     );
     this.text.nativeElement.value = "";
   }

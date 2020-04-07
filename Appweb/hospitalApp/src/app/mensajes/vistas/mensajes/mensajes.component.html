@@ -1,1 +1,39 @@
-<p>mensajes works!</p>
+<div class="contenedor">
+  <div class="mensajes">
+    <div class="encabezado">
+      <div>Mensaje</div>
+      <div>Editar</div>
+      <div>Eliminar</div>
+    </div>
+    <div class="listamensajes">
+      <div style="margin-bottom: 15px;">
+        <div class="items" *ngFor="let item of mensajes$ | async ; let i = index">
+          <div class="itemMensaje">{{item}}</div>
+          <button mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="deleteMensaje(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-card class="addmensaje">
+    <mat-card-header>
+      <mat-card-title>
+        Agregar Mensajes
+      </mat-card-title>
+      <mat-card-subtitle>
+        Agrege los mensajes personalizados
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Mensaje</mat-label>
+        <textarea matInput #mensaje></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="saveMensaje(mensaje.value)">Agregar</button>
+    </mat-card-content>
+  </mat-card>
+</div>

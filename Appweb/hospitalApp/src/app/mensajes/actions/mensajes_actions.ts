@@ -8,3 +8,16 @@ export const loadedMensajes = createAction(
   props<{ mensajes: string[] }>()
 );
 
+export const saveMensajes = createAction(
+  "[Mensajes Componet] SaveMensajes",
+  props<{ mensaje: string}>()
+);
+export const deleteMensajes = createAction(
+  "[Mensajes Componet] DeleteMensajes",
+  props<{ index:number,confirmar:boolean}>()
+);
+export const deleteMensajesDb = createAction(
+  "[Mensajes Componet] DeleteMensajesDB",
+  props<{ index:number}>()
+);
+
