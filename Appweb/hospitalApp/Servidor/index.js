@@ -7,7 +7,7 @@ var jwtClave = "admin.120";
 var http = require("http")
 var httpServ = http.createServer(app)
 var mqtt=require("./mqtt_server");
-
+var FMC = require("./notificaciones/notificacones")
 // tareas Programadas
 var activarTurnos    = require("./tareas/turnos").activarTurnos
 var desactivarTurnos = require("./tareas/turnos").desactivarTurnos
@@ -31,6 +31,7 @@ app.use('/mensajes',require('./api/mensajes'))
 
 
 
-server.listen(4001, () => {
+server.listen(4001, async () => {
   console.log("Server ready");
+ 
 });

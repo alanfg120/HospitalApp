@@ -1,17 +1,21 @@
+
+
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hospitalapp/src/componetes/home/bloc/home_bloc.dart';
 
 class NavigatorBar extends StatefulWidget {
 
-  NavigatorBar({this.items,this.selectpage});
+  NavigatorBar({this.items,this.selectpage,Key key}):super(key:key);
    final  List items;
    final  Function(int index) selectpage;
 
   @override
-  _NavigatorBarState createState() => _NavigatorBarState();
+  NavigatorBarState createState() => NavigatorBarState();
 }
 
-class _NavigatorBarState extends State<NavigatorBar> {
+class NavigatorBarState extends State<NavigatorBar>  with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return  SafeArea (
@@ -42,10 +46,17 @@ class _NavigatorBarState extends State<NavigatorBar> {
                             mainAxisSize : MainAxisSize.min,
                             children     : <Widget>[
                                              item[2] == 1  || item[2]==2 ?
-                                             Badge(
-                                             showBadge    : false,
-                                             badgeContent : Text('1',style:TextStyle(color: Colors.white)),
-                                             child: Icon(item[0],color:item[3],size: 32.0)
+                                             BlocBuilder<HomeBloc,HomeState>(
+                                               builder : (context,state)=>
+                                               Badge(
+                                               showBadge    : item[2] == 1 ? state.chatmessajeBadge : state.notificationBadge,
+                                               position: BadgePosition.topLeft(left: 15),
+                                               badgeContent : item[2] == 1 ?
+                                               Text(state.numberBadgeChatMessaje.toString(),style:TextStyle(color: Colors.white)):
+                                               Text(state.numberBadgetNotification.toString(),style:TextStyle(color: Colors.white)),
+                                               child: Icon(item[0],color:item[3],size: 32.0),
+                                               animationDuration: Duration(seconds: 2),
+                                               ),
                                              )
                                              :Icon(item[0],color:item[3],size: 32.0),
                                              Text(
@@ -59,21 +70,22 @@ class _NavigatorBarState extends State<NavigatorBar> {
                             ),
                 onPressed : (){
                                 widget.selectpage(item[2]);
-                                setState((){
-                                            widget.items.forEach((itemmenu) {
-                                            
-                                             if(itemmenu[2]==item[2]){
-                                               itemmenu[3]= Colors.white;
-                                                
-
-                                             }
-                                                
-                                            else itemmenu[3]= Colors.white70;
-                                                  
-                                            });
-                                });
+                                selectPage(item);
                                },
                 )).toList();
-  } 
+  }
+
+ selectPage(item) {
+   setState((){
+     widget.items.forEach((itemmenu) {
+       if(itemmenu[2]==item[2]){
+         itemmenu[3]= Colors.white;
+       }
+       else itemmenu[3]= Colors.white70;
+     });
+   });
+ }
 }
+
+
 

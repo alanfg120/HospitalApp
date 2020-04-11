@@ -6,9 +6,11 @@ import 'package:hospitalapp/src/plugins/push_notification.dart';
 import 'package:http/http.dart' as http;
 
 class LoginRepocitorio {
+  
   final headers = {"Content-Type": "application/json"};
-  final url = "https://hospital.apptransportes.com/usuarios/";
-  final push = PushNotificatios();
+  final url     = "http://192.168.0.17:4001/usuarios/";
+  final push    = PushNotificatios();
+
   Future<Usuario> getUsuario() async {
     final usuarioBox = await Hive.openBox<Usuario>('usuario');
     //usuarioBox.clear();

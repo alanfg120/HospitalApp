@@ -25,6 +25,7 @@ router.post("/new", async (req, res) => {
 
 router.post("/login", async (req, res) => {
  
+  console.log(req.body);
   
   let { db, conection } = await mongo();
   try {

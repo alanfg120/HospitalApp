@@ -11,7 +11,7 @@ class MqttService {
   mqtt.MqttConnectionState connectionState;
   mqtt.MqttClientPayloadBuilder builder;
   StreamSubscription _reconect;
-  final _streamcotroller = StreamController<String>.broadcast();
+  final _streamcotroller = StreamController<bool>.broadcast();
   final _streamMqttt     = StreamController<List<mqtt.MqttReceivedMessage>>.broadcast();
 
   void disposeStreams(){
@@ -19,7 +19,7 @@ class MqttService {
     _streamMqttt?.close();
     }
 
-  Function(String)      get conectionMqttSink   => _streamcotroller.sink.add;
+  Function(bool)      get conectionMqttSink   => _streamcotroller.sink.add;
   Stream                get conectionMqttStream => _streamcotroller.stream;
 
   Function(List<mqtt.MqttReceivedMessage>)  get messajeMqttSink   => _streamMqttt.sink.add;
@@ -63,7 +63,7 @@ class MqttService {
       topic = usuario.cedula;
     }
     else  topic = 'initial';
-    client = mqtt.MqttClient('ws://hospital.apptransportes.com', '');
+    client = mqtt.MqttClient('ws://192.168.0.17', '');
     client.port = 9001;
     client.useWebSocket = true;
    
@@ -111,12 +111,10 @@ class MqttService {
 
     /// Check if we are connected
     if (client.connectionStatus.state == mqtt.MqttConnectionState.connected) {
-
        _reconect?.cancel();
        _reconect = null;
-       conectionMqttSink("Conectado a Mqtt");
+       conectionMqttSink(true);
     } else {
-      
       _disconnect();
     }
 
@@ -124,20 +122,19 @@ class MqttService {
     /// notifications of published updates to each subscribed topic.
      subscribeToTopic(topic);
      client.updates.listen((data){
-        messajeMqttSink(data);
+     messajeMqttSink(data);
    
     });
   }
 
   void _disconnect() {
     client.disconnect();
-   
     _onDisconnected();
   }
 
   void _onDisconnected() {
    _reconectMqtt();
-   conectionMqttSink("Desonectado a Mqtt");
+   conectionMqttSink(false);
   }
 
   String onMessage(List<mqtt.MqttReceivedMessage> event) {
@@ -157,7 +154,7 @@ class MqttService {
      print("Reconectando...");
     if (_reconect == null) {
       _reconect = Stream.periodic(Duration(seconds: 10)).listen((_) {
-        this.connect(); 
+        this.connect();
       });
     }
   }
