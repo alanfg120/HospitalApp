@@ -1,9 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hospitalapp/src/componetes/chat/bloc/chat_bloc.dart';
 import 'package:hospitalapp/src/componetes/chat/models/chat_model.dart';
+import 'package:hospitalapp/src/componetes/login/bloc/login_bloc.dart';
 import 'package:hospitalapp/src/widgets/mensaje_widget.dart';
 
 class ChatPage extends StatefulWidget {
@@ -22,17 +24,26 @@ class _ChatPageState extends State<ChatPage> {
    
   @override
   Widget build(BuildContext context) {
-
+    
     final double     paddingInput     = MediaQuery.of(context).size.width * 0.05;
     final EdgeInsets paddingTextfield = EdgeInsets.only(left: 15,right:paddingInput,bottom: 20);
+    final stateUsuario =  context.bloc<LoginBloc>().state;
+
+    
 
     return  Scaffold(
                body  : BlocBuilder<ChatBloc,ChatState>(
                         builder:(context,state){
                                  if(state is LoadingChatState)
                                     return Center(child: CircularProgressIndicator());
-                                 if(state is LoadMensajesState)
-                                 return  _listMensaje(state.mensajes);
+                                 if(state is LoadMensajesState){
+                                     if(stateUsuario is AutenticadoState){
+                                         final cedula  = stateUsuario.usuario.cedula;
+                                         state.mensaje.id= cedula;
+                                     }
+                                     return  _listMensaje(state.mensajes);
+                                 }
+                                 
                                  
                               return Container();
                              }
@@ -75,6 +86,7 @@ class _ChatPageState extends State<ChatPage> {
                                      ),
                                      onChanged: (value){
                                        state.mensaje.mensaje=value;
+                                      
                                      },
                                    ),
                            );

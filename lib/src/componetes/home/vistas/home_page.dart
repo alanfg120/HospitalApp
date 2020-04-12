@@ -143,9 +143,9 @@ class _HomePageState extends State<HomePage> {
                                              child           : Icon(addIcon(currentindex), color: Colors.white),
                                              onPressed       : () {
                                                                    if (currentindex == 1) {
-                                                                     final state = context.bloc<ChatBloc>().state;
-                                                                    if (state is LoadMensajesState) 
-                                                                      context.bloc<ChatBloc>().add(SendMensajeEvent(mensaje: state.mensaje));
+                                                                     final stateChat = context.bloc<ChatBloc>().state;
+                                                                    if (stateChat is LoadMensajesState) 
+                                                                      context.bloc<ChatBloc>().add(SendMensajeEvent(mensaje: stateChat.mensaje));
                                                                    }
                                              },
                                              backgroundColor : Color(0XFFE4097F),

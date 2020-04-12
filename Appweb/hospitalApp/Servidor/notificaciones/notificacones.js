@@ -5,8 +5,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-
-
 async function FMC(title, body, token) {
   let message = {
     data: {

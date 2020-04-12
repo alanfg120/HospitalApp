@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hospitalapp/src/componetes/chat/data/chat_repositorio.dart';
 import 'package:hospitalapp/src/componetes/chat/models/chat_model.dart';
-
+import 'dart:convert';
 import 'package:meta/meta.dart';
 part 'chat_event.dart';
 part 'chat_state.dart';
@@ -27,9 +27,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     if (event.mensaje.mensaje.isNotEmpty) {
       event.mensaje.recibido = false;
       state.mensajes.add(event.mensaje);
-      repositorio.send(event.mensaje);
+     
       final mensaje = Mensaje(id: "1", mensaje: '', recibido: false);
       yield state.copyWith(mensajes: state.mensajes, mensaje: mensaje);
+       repositorio.send(event.mensaje);
     }
   }
 
@@ -48,6 +49,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       RequestMensajeEvent event, LoadMensajesState state) async* {
     if (event.mensaje.mensaje.isNotEmpty) {
       event.mensaje.recibido = true;
+      event.mensaje.mensaje = utf8.decode(event.mensaje.mensaje.runes.toList());
       state.mensajes.add(event.mensaje);
       final mensaje = Mensaje(id: "1", mensaje: '', recibido: false);
       yield state.copyWith(mensajes: state.mensajes, mensaje: mensaje);
