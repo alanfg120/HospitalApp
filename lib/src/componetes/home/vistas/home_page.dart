@@ -99,7 +99,10 @@ class _HomePageState extends State<HomePage> {
     });
 
     conectionMqtt.onData((connection) {
-      print(connection);
+      if(connection)
+         _snackBar("Estas Conectado");
+      else 
+         _snackBar("Estas Desconectado");
     });
 
     onresume.onData((data) {
@@ -213,4 +216,12 @@ class _HomePageState extends State<HomePage> {
                      backgroundColor : colorSecundary,
            ),
         );
+   _snackBar(String mensaje){
+     showBottomSheet(context:context , builder: (context){
+       return Container(
+              height: 20,
+              child: Text(mensaje),
+       );
+     });
+   }
 }

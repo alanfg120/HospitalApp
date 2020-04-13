@@ -3,27 +3,28 @@ import 'dart:async';
 
 import 'package:hive/hive.dart';
 import 'package:hospitalapp/src/componetes/login/models/usuario_model.dart';
-import 'package:mqtt_client/mqtt_client.dart' as mqtt;
+import 'package:mqtt_client/mqtt_client.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
 
 class MqttService {
-
-  mqtt.MqttClient client;
-  mqtt.MqttConnectionState connectionState;
-  mqtt.MqttClientPayloadBuilder builder;
-  StreamSubscription _reconect;
+  MqttServerClient client;
+  MqttConnectionState connectionState;
+  MqttClientPayloadBuilder builder;
+  //StreamSubscription _reconect;
   final _streamcotroller = StreamController<bool>.broadcast();
-  final _streamMqttt     = StreamController<List<mqtt.MqttReceivedMessage>>.broadcast();
+  final _streamMqttt = StreamController<List<MqttReceivedMessage>>.broadcast();
 
-  void disposeStreams(){
+  void disposeStreams() {
     _streamcotroller?.close();
     _streamMqttt?.close();
-    }
+  }
 
-  Function(bool)      get conectionMqttSink   => _streamcotroller.sink.add;
-  Stream                get conectionMqttStream => _streamcotroller.stream;
+  Function(bool) get conectionMqttSink => _streamcotroller.sink.add;
+  Stream get conectionMqttStream => _streamcotroller.stream;
 
-  Function(List<mqtt.MqttReceivedMessage>)  get messajeMqttSink   => _streamMqttt.sink.add;
-  Stream                get mesaajeMqttStream => _streamMqttt.stream;
+  Function(List<MqttReceivedMessage>) get messajeMqttSink =>
+      _streamMqttt.sink.add;
+  Stream get mesaajeMqttStream => _streamMqttt.stream;
 
   String topic;
   static final MqttService _instancia = new MqttService._internal();
@@ -34,16 +35,16 @@ class MqttService {
   MqttService._internal();
 
   void subscribeToTopic(String topic) {
-    if (client.connectionStatus.state == mqtt.MqttConnectionState.connected) {
+    if (client.connectionStatus.state == MqttConnectionState.connected) {
       print('[MQTT client] Subscribing to $topic');
-      client.subscribe(topic, mqtt.MqttQos.exactlyOnce);
+      client.subscribe(topic, MqttQos.atLeastOnce);
     }
   }
 
   void sendMessaje(String topic, String messaje) {
-    builder = mqtt.MqttClientPayloadBuilder();
-    builder.addString(messaje);
-    client.publishMessage(topic, mqtt.MqttQos.atMostOnce, builder.payload);
+    builder = MqttClientPayloadBuilder();
+    builder.addUTF8String(messaje);
+    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload);
   }
 
   void connect() async {
@@ -58,15 +59,16 @@ class MqttService {
     /// If you want to use websockets rather than TCP see below.
     ///
     Box<Usuario> usuarioBox = await Hive.openBox<Usuario>('usuario');
-    if(usuarioBox.length >0){
+    if (usuarioBox.length > 0) {
       final Usuario usuario = usuarioBox.get(0);
       topic = usuario.cedula;
-    }
-    else  topic = 'initial';
-    client = mqtt.MqttClient('ws://192.168.0.17', '');
-    client.port = 9001;
-    client.useWebSocket = true;
-   
+    } else
+      topic = 'initial';
+    client = MqttServerClient('192.168.0.17', '');
+    client.port = 1883;
+    client.autoReconnect = true;
+    //client.useWebSocket = true;
+
     /// A websocket URL must start with ws:// or wss:// or Dart will throw an exception, consult your websocket MQTT broker
     /// for details.
     /// To use websockets add the following lines -:
@@ -79,83 +81,59 @@ class MqttService {
 
     /// If you intend to use a keep alive value in your connect message that is not the default(60s)
     /// you must set it here
-    client.keepAlivePeriod = 10;
+    client.keepAlivePeriod = 30;
 
     /// Add the unsolicited disconnection callback
-    client.onDisconnected = _onDisconnected;
+    //client.onDisconnected = _onDisconnected;
+    client.onAutoReconnect = onAutoReconnect;
+    client.onConnected = onConnected;
 
     /// Create a connection message to use or use the default one. The default one sets the
     /// client identifier, any supplied username/password, the default keepalive interval(60s)
     /// and clean session, an example of a specific one below.
-    final mqtt.MqttConnectMessage connMess = mqtt.MqttConnectMessage()
+    final MqttConnectMessage connMess = MqttConnectMessage()
         .withClientIdentifier(topic)
-        .startClean() // Non persistent session for testing
+        //.startClean() // Non persistent session for testing
         .keepAliveFor(30)
-        .withWillQos(mqtt.MqttQos.atMostOnce);
+        .withWillQos(MqttQos.atLeastOnce);
 
     print('[MQTT client] MQTT client connecting....');
     client.connectionMessage = connMess;
 
-    /// Connect the client, any errors here are communicated by raising of the appropriate exception. Note
-    /// in some circumstances the broker will just disconnect us, see the spec about this, we however will
-    /// never send malformed messages.
-
     try {
-     
       await client.connect('alice', 'secret');
-    
     } catch (e) {
       print(e);
-      _disconnect();
+      client.disconnect();
     }
 
     /// Check if we are connected
-    if (client.connectionStatus.state == mqtt.MqttConnectionState.connected) {
-       _reconect?.cancel();
-       _reconect = null;
-       conectionMqttSink(true);
-    } else {
-      _disconnect();
-    }
+    if (client.connectionStatus.state == MqttConnectionState.disconnected)
+      client.disconnect();
 
-    /// The client has a change notifier object(see the Observable class) which we then listen to to get
-    /// notifications of published updates to each subscribed topic.
-     subscribeToTopic(topic);
-     client.updates.listen((data){
-     messajeMqttSink(data);
-   
+    subscribeToTopic(topic);
+
+    client.updates.listen((data) {
+      messajeMqttSink(data);
     });
   }
 
-  void _disconnect() {
-    client.disconnect();
-    _onDisconnected();
-  }
-
-  void _onDisconnected() {
-   _reconectMqtt();
-   conectionMqttSink(false);
-  }
-
-  String onMessage(List<mqtt.MqttReceivedMessage> event) {
-    final mqtt.MqttPublishMessage recMess =
-        event[0].payload as mqtt.MqttPublishMessage;
+  String onMessage(List<MqttReceivedMessage> event) {
+    final MqttPublishMessage recMess = event[0].payload as MqttPublishMessage;
     final String message =
-        mqtt.MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-    /*   print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
-        'payload is <-- $message -->');
-    print(client.connectionStatus.state);
-    print("[MQTT client] message with topic: ${event[0].topic}");
-    print("[MQTT client] message with message: $message"); */
+        MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
     return message;
   }
 
-  void _reconectMqtt() {
-     print("Reconectando...");
-    if (_reconect == null) {
-      _reconect = Stream.periodic(Duration(seconds: 10)).listen((_) {
-        this.connect();
-      });
-    }
+  void onAutoReconnect() {
+    print(
+        'EXAMPLE::onAutoReconnect client callback - Client auto reconnection sequence will start');
+    conectionMqttSink(false);
+  }
+
+  void onConnected() {
+    print(
+        'EXAMPLE::OnConnected client callback - Client connection was sucessful');
+    conectionMqttSink(true);
   }
 }
