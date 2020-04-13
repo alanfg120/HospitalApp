@@ -21,14 +21,15 @@ import { MensajeReducer } from './mensajes/reducers/mensajes.reducer';
 import { MensajesEffects } from './mensajes/effects/mensajes_effects';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: "localhost",
+  hostname: "192.168.0.17",
   port: 9001,
   path: "/mqtt",
   username: "alice",
   password: "secret",
   connectOnCreate: false,
   keepalive:10,
-  reconnectPeriod:10
+  reconnectPeriod:10,
+  clean:false
   //protocol: "wss"
 };
 
