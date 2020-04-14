@@ -58,6 +58,7 @@ servermqtt.on("published", async (packet, client) => {
   if(packet.topic=='hospital'){
      cedula = messaje.id;
      messaje.recibido= true;
+  
   }
   else cedula = packet.topic;
   let { db, conection } = await mongo();
