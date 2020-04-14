@@ -1,0 +1,17 @@
+<mat-card >
+    <mat-card-header>
+      <mat-card-title>
+        Actulizar Mensajes
+      </mat-card-title>
+      <mat-card-subtitle>
+        actuliza el mensaje
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="dialogo">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Mensaje</mat-label>
+        <textarea matInput [(ngModel)]="data.mensaje" name="mensaje"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="updateMensaje()">Actualizar</button>
+    </mat-card-content>
+  </mat-card>

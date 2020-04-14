@@ -24,7 +24,6 @@ export class AuthService implements CanActivate {
       this._mqtt.connect({ clientId: sessionStorage.getItem("id_conection") });
       return true;
     } else {
-      console.log(" No autorizado");
       this.router.navigate(["login"]);
       return false;
     }

@@ -35,6 +35,6 @@ export class LoginComponent implements OnInit {
   }
 
   snackBar(mensaje: string) {
-    this.snack.open(mensaje, "Aceptar", { duration: 2000 });
+    this.snack.open(mensaje, "Aceptar", { duration: 2000,horizontalPosition:'left'});
   }
 }

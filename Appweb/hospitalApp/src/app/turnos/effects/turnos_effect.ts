@@ -36,7 +36,11 @@ export class TurnosEffects {
         tap(action => {
           this._mqttService.unsafePublish(
             action.topic,
-            JSON.stringify(action.mensaje)
+            JSON.stringify(action.mensaje),
+            { 
+              qos:1,
+              retain:false
+            }
           );
         })
       ),

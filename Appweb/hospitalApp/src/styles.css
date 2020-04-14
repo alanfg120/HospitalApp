@@ -60,3 +60,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .fadeIn {
     animation-name: fadeIn;
   }
+
+  ::-webkit-scrollbar{
+    width: 6px;
+    background-color: #F5F5F5;
+  }
+  ::-webkit-scrollbar-track{
+  
+    border-radius: 5px;
+    background-color: #CCCCCC;
+  }
+  ::-webkit-scrollbar-thumb{
+    border-radius: 5px;
+    background-color: #e4097f;
+   
+  }

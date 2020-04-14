@@ -53,7 +53,7 @@ export class LoginEffects {
           sessionStorage.removeItem("id_seccion");
           sessionStorage.removeItem("id_conection");
           this.router.navigate(["login"]);
-          this._mqtt.disconnect();
+          this._mqtt.disconnect(true)
         })
       ),
     { dispatch: false }

@@ -1,4 +1,7 @@
 <div class="contenedor">
+  <div class="loading" *ngIf="loading$ | async">
+    <mat-spinner color="accent" diameter="40"></mat-spinner>
+  </div>
   <div class="mensajes">
     <div class="encabezado">
       <div>Mensaje</div>
@@ -8,11 +11,11 @@
     <div class="listamensajes">
       <div style="margin-bottom: 15px;">
         <div class="items" *ngFor="let item of mensajes$ | async ; let i = index">
-          <div class="itemMensaje">{{item}}</div>
-          <button mat-icon-button color="primary">
+          <div class="itemMensaje">{{item.mensaje}}</div>
+          <button mat-icon-button color="primary" (click)="updateMensaje(item.id,item.mensaje,i)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="accent" (click)="deleteMensaje(i)">
+          <button mat-icon-button color="accent" (click)="deleteMensaje(i,item.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>

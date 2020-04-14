@@ -97,7 +97,12 @@
       </div>
 
       <div class="messages animated slideInUp" *ngIf="infomessage">
-        mensajes personalizados
+       <div class="mjsp" *ngFor="let item of mensajesp$ | async">
+         <div class="mensajechat">
+            {{item.mensaje}}
+         </div>
+         <button mat-raised-button color="accent" (click)="texto.value=item.mensaje;sendMensajes()">Enviar</button>
+       </div>
       </div>
     </div>
   </div>

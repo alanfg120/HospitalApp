@@ -9,6 +9,6 @@ import { environment } from "src/environments/environment";
 export class LoginService {
   constructor(public http: HttpClient) {}
   auth(usuario: Usuario) {
-    return this.http.post(`${environment.apiUrl}/usuarios/login`, usuario);
+    return this.http.post(`${environment.apiUrl}/usuarios/login/administradores`, usuario);
   }
 }
