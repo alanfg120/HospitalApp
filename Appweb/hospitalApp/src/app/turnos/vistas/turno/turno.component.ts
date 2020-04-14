@@ -20,6 +20,8 @@ import { TurnosState } from "../../reducer/turnos_reducer";
 import { getTurno } from "../../selectors/turnos_selector";
 import { requestMensaje, sendMensaje } from "../../actions/turnos_actions";
 import { debounceTime } from "rxjs/operators";
+import { MensajesState } from '../../../mensajes/reducers/mensajes.reducer';
+import { getMensajes } from '../../../mensajes/selectors/mensajes_selectors';
 
 
 @Component({
@@ -35,6 +37,7 @@ export class TurnoComponent implements OnInit, OnDestroy, AfterViewInit {
   subscription: Subscription;
   //turno$: Observable<Turno> = this.store.select(state => state.turno.turno);
   params$ = this.storerouter.select((state: any) => state.router.state.params);
+  mensajesp$ = this.storerouter.select(getMensajes);
   mensajes$: Observable<Mensaje[]>;
   turno$: Observable<Turno>;
   infomessage: boolean;
@@ -43,6 +46,7 @@ export class TurnoComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private store: Store<{ turno: TurnosState }>,
     private storerouter: Store<{ router: RouterState }>,
+    private storemensajes: Store<{ router: MensajesState }>,
     public router: Router,
     private _mqttService: MqttService
   ) {}

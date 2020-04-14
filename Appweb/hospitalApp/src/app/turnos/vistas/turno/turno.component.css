@@ -96,6 +96,8 @@
 
 .messages {
   height: calc(50vh - 132px);
+  margin-top: 40px;
+  overflow-y: scroll;
 }
 
 .nodata {
@@ -108,6 +110,7 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
+
   overflow-y: scroll;
 }
 .mensajechat {
@@ -127,4 +130,11 @@
 mat-form-field.mat-form-field {
   font-size: 13px;
   width: 100%;
+}
+
+.mjsp{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+ 
 }

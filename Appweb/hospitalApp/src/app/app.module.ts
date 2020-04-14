@@ -19,6 +19,7 @@ import { StoreRouterConnectingModule, routerReducer } from "@ngrx/router-store";
 import { CustomSerializer } from "./router-store/custom-route-serializer";
 import { MensajeReducer } from './mensajes/reducers/mensajes.reducer';
 import { MensajesEffects } from './mensajes/effects/mensajes_effects';
+import { MatSnackBarModule } from '@angular/material';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: "192.168.0.17",
@@ -52,7 +53,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     }),
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     Interceptor,
-    StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer })
+    StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
